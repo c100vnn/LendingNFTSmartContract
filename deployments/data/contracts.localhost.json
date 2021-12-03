@@ -1,0 +1,10 @@
+{
+  "nft": {
+    "name": "NFT",
+    "address": "0xE96fD3CAf1F1A043Da4C47621a03955d4C6aBf7f"
+  },
+  "ntfMarket": {
+    "name": "NFTMarket",
+    "address": "0x0eD06E4dF73855CBbb34308d96FeD23A2A2536e4"
+  }
+}

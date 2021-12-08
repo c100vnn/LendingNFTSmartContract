@@ -4,13 +4,13 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract Farmfinace is ERC20, Pausable, AccessControl {
+contract FarmFinace is ERC20, Pausable, AccessControl {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
-    constructor() ERC20("Farmfinace", "FFT") {
+    constructor() ERC20("FarmFinace", "FFT") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(PAUSER_ROLE, msg.sender);
-        _mint(msg.sender, 1000000000 * 10 ** decimals());
+        _mint(msg.sender, 2000000000 * 10 ** decimals());
     }
 
     function pause() public onlyRole(PAUSER_ROLE) {

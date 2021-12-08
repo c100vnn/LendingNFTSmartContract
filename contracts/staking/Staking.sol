@@ -9,14 +9,14 @@ import './Reserve.sol';
 
 contract Staking is Ownable, ReentrancyGuard {
     using SafeMath for uint256;
-    Reserve public reserve;
-    IERC20 public mainToken;
-    uint256 public rewardRate;
-    uint256 public lastUpdateTime;
-    uint256 public rewardPerTokenStake;
-    mapping(address => uint256) public userRewardPerStake;
+    Reserve public reserve; //kho tien lai
+    IERC20 public mainToken; // token stake
+    uint256 public rewardRate; //R
+    uint256 public lastUpdateTime; //a, thoi gian cap nhat cuoi cung
+    uint256 public rewardPerTokenStake; //Sigma (delta t)*R/L(t)
+    mapping(address => uint256) public userRewardPerStake;  //userRewardPerStake[account] =>  uint256. 
     mapping(address => uint256) public userToRewards;
-    uint256 totalSupply;
+    uint256 totalSupply; //L(t)
     mapping(address => StakingInfo) public userToStakeInfo;
 
     struct StakingInfo {
@@ -31,11 +31,13 @@ contract Staking is Ownable, ReentrancyGuard {
     function setReserve(address _reserve) public onlyOwner(){
         reserve = Reserve(_reserve);
     }
+    // Sigma(t) R/L 
     function rewardPerToken() public view returns (uint256) {
         if (totalSupply == 0) {
             return rewardPerTokenStake;
         }
         return
+            //0+t*R/L
             rewardPerTokenStake.add(
                 block
                     .timestamp
@@ -46,13 +48,13 @@ contract Staking is Ownable, ReentrancyGuard {
             );
     }
     function calculateUserReward(address account) public view returns (uint256) {
-        return userToStakeInfo[account].amount.mul(rewardPerToken().sub(userRewardPerStake[account])).div(1e18).div(totalSupply);
+        return userToStakeInfo[account].amount.mul(rewardPerToken().sub(userRewardPerStake[account])).div(1e18).add(userToRewards[account]);
     }
     modifier updateReward(address account) {
         require(account != address(0));
-        rewardPerTokenStake = rewardPerToken();
+        rewardPerTokenStake = rewardPerToken(); //+=t*R/L
         lastUpdateTime = block.timestamp;
-        userToRewards[account] = calculateUserReward(account);
+        userToRewards[account] = calculateUserReward(account);// = amount*((t*R/L) - 0)/L //---((a-1))
         userRewardPerStake[account] = rewardPerTokenStake;
         _;
     }

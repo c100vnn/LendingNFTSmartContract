@@ -54,7 +54,7 @@ contract Staking is Ownable, ReentrancyGuard {
         require(account != address(0));
         rewardPerTokenStake = rewardPerToken(); //+=t*R/L
         lastUpdateTime = block.timestamp;
-        userToRewards[account] = calculateUserReward(account);// = amount*((t*R/L) - 0)/L //---((a-1))
+        userToRewards[account] = calculateUserReward(account);// += amount*((t*R/L) - 0) //---((a-1))
         userRewardPerStake[account] = rewardPerTokenStake;
         _;
     }

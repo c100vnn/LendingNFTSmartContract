@@ -6,7 +6,6 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 import '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
 import './Reserve.sol';
-
 contract Staking is Ownable, ReentrancyGuard {
     using SafeMath for uint256;
     Reserve public reserve; //kho tien lai
@@ -14,7 +13,7 @@ contract Staking is Ownable, ReentrancyGuard {
     uint256 public rewardRate; //R
     uint256 public lastUpdateTime; //a, thoi gian cap nhat cuoi cung
     uint256 public rewardPerTokenStake; //Sigma (delta t)*R/L(t)
-    mapping(address => uint256) public userRewardPerStake;  //userRewardPerStake[account] =>  uint256. 
+    mapping(address => uint256) public userRewardPerStake; //userRewardPerStake[account] =>  uint256.
     mapping(address => uint256) public userToRewards;
     uint256 totalSupply; //L(t)
     mapping(address => StakingInfo) public userToStakeInfo;
@@ -28,10 +27,12 @@ contract Staking is Ownable, ReentrancyGuard {
         mainToken = IERC20(_mainToken);
         rewardRate = _rewardRate;
     }
-    function setReserve(address _reserve) public onlyOwner(){
+
+    function setReserve(address _reserve) public onlyOwner {
         reserve = Reserve(_reserve);
     }
-    // Sigma(t) R/L 
+
+    // Sigma(t) R/L
     function rewardPerToken() public view returns (uint256) {
         if (totalSupply == 0) {
             return rewardPerTokenStake;
@@ -47,14 +48,25 @@ contract Staking is Ownable, ReentrancyGuard {
                     .div(totalSupply)
             );
     }
-    function calculateUserReward(address account) public view returns (uint256) {
-        return userToStakeInfo[account].amount.mul(rewardPerToken().sub(userRewardPerStake[account])).div(1e18).add(userToRewards[account]);
+
+    function calculateUserReward(address account)
+        public
+        view
+        returns (uint256)
+    {
+        return
+            userToStakeInfo[account]
+                .amount
+                .mul(rewardPerToken().sub(userRewardPerStake[account]))
+                .div(1e18)
+                .add(userToRewards[account]);
     }
+
     modifier updateReward(address account) {
         require(account != address(0));
         rewardPerTokenStake = rewardPerToken(); //+=t*R/L
         lastUpdateTime = block.timestamp;
-        userToRewards[account] = calculateUserReward(account);// += amount*((t*R/L) - 0) //---((a-1))
+        userToRewards[account] = calculateUserReward(account); // += amount*((t*R/L) - 0) //---((a-1))
         userRewardPerStake[account] = rewardPerTokenStake;
         _;
     }
@@ -94,5 +106,13 @@ contract Staking is Ownable, ReentrancyGuard {
         require(userToRewards[msg.sender] > 0);
         reserve.transferToStakeContract(userToRewards[msg.sender], msg.sender);
         userToRewards[msg.sender] = 0;
+    }
+
+    function getTotalSupply() external view returns (uint256) {
+        return totalSupply;
+    }
+
+    function getStakeInfo(address account) external view returns (StakingInfo memory) {
+        return userToStakeInfo[account];
     }
 }

@@ -100,16 +100,14 @@ contract RewardPool is AccessControl, Pausable, ReentrancyGuard {
         uint256 amount = withdraws[_id].amount;
         require(timeDuration > 86400);
         require(amount > minAmount);
-        uint256 feeRate = 2;
-        if (timeDuration > 432000) {
+        uint256 feeRate = 2;  //> 5 day
+        if (timeDuration > 345600 && timeDuration < 432000) { // from day 4 to  day 5
             feeRate = 12;
-        } else if (timeDuration > 345600) {
-            feeRate = 12;
-        } else if (timeDuration > 259200) {
+        } else if (timeDuration > 259200) { // from day 3 to day 4
             feeRate = 22;
-        } else if (timeDuration > 172800) {
+        } else if (timeDuration > 172800) { // from day 2 to day 3
             feeRate = 32;
-        } else if (timeDuration > 86400) {
+        } else if (timeDuration > 86400) {  // from day 1 to day 2
             feeRate = 42;
         }
         uint256 fee = amount.mul(feeRate).div(100);

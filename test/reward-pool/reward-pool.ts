@@ -1,25 +1,28 @@
-//Có 2 functions:
-//requestWithdraw để user tạo request => object được tạo, event được emit. Khó khăn: check event ntn, fast foward thời gian ntn
-//distributeReward để admin gọi và gửi tiền cho người request => update object, tính fee chuẩn
+import { network } from 'hardhat';
 import { assert, expect } from 'chai'
 import { ethers } from 'hardhat'
 import { RewardPool, FarmFinace } from 'types'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
-import { BigNumberish } from "ethers";
+import Web3 from 'web3';
+const web3 = new Web3('ws://localhost:8546');
+
 
 describe('Reward pool contract', function () {
 
-    let [admin, reciever1, receiver2]: SignerWithAddress[] = []
+    let [admin, receiver1, receiver2]: SignerWithAddress[] = []
     let rewardPool: RewardPool
     let token: FarmFinace
     let rewardPoolAddress: string
     let rewardPoolAmount: string = "99000000000000000000000000" // 99000000*10^18
     beforeEach(async () => {
-        [admin, reciever1, receiver2] = await ethers.getSigners()
+        [admin, receiver1, receiver2] = await ethers.getSigners()
         const Token = await ethers.getContractFactory('FarmFinace')
         token = await Token.deploy()
         await token.deployed()
         const tokenAddress = token.address
+
+        const ganache = require("ganache-core");
+        const web3 = new Web3(ganache.provider());
 
         const RewardPool = await ethers.getContractFactory('RewardPool')
         rewardPool = await RewardPool.deploy(tokenAddress)
@@ -31,7 +34,14 @@ describe('Reward pool contract', function () {
         console.log("reward pool balance: ",await token.balanceOf(rewardPoolAddress))
     })
     it("#requestWithdraw should revert if duration < 1 day", async function () {
-      
+        const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+         await rewardPool.requestWithdraw(rewardAmount)
+        //console.log(requestTx)
+        // await network.provider.send("evm_increaseTime", [86000])
+        // await expect((await rewardPool.requestWithdraw(rewardAmount)))
+        // .to
+        // .be
+        // .reverted;
     })
     it("#requestWithdraw should revert if amount < min amount ", async function () {
       

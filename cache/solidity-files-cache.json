@@ -146,10 +146,10 @@
         "Context"
       ]
     },
-    "E:\\Techcom\\project\\farmville-smartcontract\\contracts\\staking\\Staking.sol": {
-      "lastModificationDate": 1639422913692,
-      "contentHash": "aaae281bfcbf55a36891f5f684b5bd42",
-      "sourceName": "contracts/staking/Staking.sol",
+    "E:\\Techcom\\project\\farmville-smartcontract\\contracts\\staking\\StakingTest.sol": {
+      "lastModificationDate": 1639523401958,
+      "contentHash": "9ba6d719383d11e40c6aecc1f922aa09",
+      "sourceName": "contracts/staking/StakingTest.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
@@ -178,13 +178,13 @@
         "@openzeppelin/contracts/access/Ownable.sol",
         "@openzeppelin/contracts/utils/math/SafeMath.sol",
         "@openzeppelin/contracts/security/ReentrancyGuard.sol",
-        "./Reserve.sol"
+        "./ReserveTest.sol"
       ],
       "versionPragmas": [
         "^0.8.4"
       ],
       "artifacts": [
-        "Staking"
+        "StakingTest"
       ]
     },
     "E:\\Techcom\\project\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\utils\\math\\SafeMath.sol": {
@@ -257,10 +257,89 @@
         "ReentrancyGuard"
       ]
     },
-    "E:\\Techcom\\project\\farmville-smartcontract\\contracts\\staking\\Reserve.sol": {
-      "lastModificationDate": 1639422913679,
-      "contentHash": "57cc6d698c047f01e19d4383d53e0fff",
-      "sourceName": "contracts/staking/Reserve.sol",
+    "E:\\Techcom\\project\\farmville-smartcontract\\contracts\\staking\\ReserveTest.sol": {
+      "lastModificationDate": 1639523336160,
+      "contentHash": "caa167d2552c6c0482f2ab1347fad2f0",
+      "sourceName": "contracts/staking/ReserveTest.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.4"
+      ],
+      "artifacts": [
+        "ReserveTest"
+      ]
+    },
+    "E:\\Techcom\\project\\farmville-smartcontract\\contracts\\staking-with-apr\\Staking.sol": {
+      "lastModificationDate": 1639538994257,
+      "contentHash": "4cd678781a6161cc478e9719a5d25a0f",
+      "sourceName": "contracts/staking-with-apr/Staking.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/utils/math/SafeMath.sol",
+        "@openzeppelin/contracts/security/ReentrancyGuard.sol",
+        "./Reserve.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.4"
+      ],
+      "artifacts": [
+        "Staking"
+      ]
+    },
+    "E:\\Techcom\\project\\farmville-smartcontract\\contracts\\staking-with-apr\\Reserve.sol": {
+      "lastModificationDate": 1639508060623,
+      "contentHash": "83141e71b7e9f4efd08142f7a14d1d1a",
+      "sourceName": "contracts/staking-with-apr/Reserve.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
@@ -296,7 +375,7 @@
       ]
     },
     "E:\\Techcom\\project\\farmville-smartcontract\\contracts\\reward\\RewardPool.sol": {
-      "lastModificationDate": 1639470428590,
+      "lastModificationDate": 1639523267858,
       "contentHash": "608d2e37bf0e4895502d259997262b5e",
       "sourceName": "contracts/reward/RewardPool.sol",
       "solcConfig": {

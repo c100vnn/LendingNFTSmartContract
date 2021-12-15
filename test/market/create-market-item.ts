@@ -2,7 +2,8 @@ import { assert, expect } from 'chai'
 import { ethers } from 'hardhat'
 import { NFT, NFTMarket } from 'types'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
-
+import Web3 from 'web3';
+const web3 = new Web3('ws://localhost:8546');
 describe('Create market item', function () {
   let [owner, buyer, seller]: SignerWithAddress[] = []
   let market: NFTMarket
@@ -14,6 +15,8 @@ describe('Create market item', function () {
   let currentBlock: number
   beforeEach(async () => {
     // Initialize contract instances
+    const ganache = require("ganache-core");
+    const web3 = new Web3(ganache.provider());
     ;[owner, buyer, seller] = await ethers.getSigners()
     const Market = await ethers.getContractFactory('NFTMarket')
     market = await Market.deploy()

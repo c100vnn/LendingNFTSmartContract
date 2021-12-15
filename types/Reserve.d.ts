@@ -21,15 +21,19 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface ReserveInterface extends ethers.utils.Interface {
   functions: {
+    "distributeProfit(address,uint256)": FunctionFragment;
     "getBalanceOfReserve()": FunctionFragment;
     "mainToken()": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "stakeAddress()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "transferToStakeContract(uint256,address)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "distributeProfit",
+    values: [string, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "getBalanceOfReserve",
     values?: undefined
@@ -48,11 +52,11 @@ interface ReserveInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "transferToStakeContract",
-    values: [BigNumberish, string]
-  ): string;
 
+  decodeFunctionResult(
+    functionFragment: "distributeProfit",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getBalanceOfReserve",
     data: BytesLike
@@ -69,10 +73,6 @@ interface ReserveInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferToStakeContract",
     data: BytesLike
   ): Result;
 
@@ -131,6 +131,18 @@ export class Reserve extends BaseContract {
   interface: ReserveInterface;
 
   functions: {
+    distributeProfit(
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "distributeProfit(address,uint256)"(
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     getBalanceOfReserve(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     "getBalanceOfReserve()"(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -164,19 +176,19 @@ export class Reserve extends BaseContract {
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    transferToStakeContract(
-      _amount: BigNumberish,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    "transferToStakeContract(uint256,address)"(
-      _amount: BigNumberish,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
   };
+
+  distributeProfit(
+    _recipient: string,
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "distributeProfit(address,uint256)"(
+    _recipient: string,
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   getBalanceOfReserve(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -212,19 +224,19 @@ export class Reserve extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  transferToStakeContract(
-    _amount: BigNumberish,
-    _recipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  "transferToStakeContract(uint256,address)"(
-    _amount: BigNumberish,
-    _recipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   callStatic: {
+    distributeProfit(
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "distributeProfit(address,uint256)"(
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     getBalanceOfReserve(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getBalanceOfReserve()"(overrides?: CallOverrides): Promise<BigNumber>;
@@ -254,18 +266,6 @@ export class Reserve extends BaseContract {
       newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    transferToStakeContract(
-      _amount: BigNumberish,
-      _recipient: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "transferToStakeContract(uint256,address)"(
-      _amount: BigNumberish,
-      _recipient: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
   };
 
   filters: {
@@ -287,6 +287,18 @@ export class Reserve extends BaseContract {
   };
 
   estimateGas: {
+    distributeProfit(
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "distributeProfit(address,uint256)"(
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     getBalanceOfReserve(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getBalanceOfReserve()"(overrides?: CallOverrides): Promise<BigNumber>;
@@ -320,21 +332,21 @@ export class Reserve extends BaseContract {
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    transferToStakeContract(
-      _amount: BigNumberish,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    "transferToStakeContract(uint256,address)"(
-      _amount: BigNumberish,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    distributeProfit(
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "distributeProfit(address,uint256)"(
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     getBalanceOfReserve(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -370,18 +382,6 @@ export class Reserve extends BaseContract {
 
     "transferOwnership(address)"(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    transferToStakeContract(
-      _amount: BigNumberish,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "transferToStakeContract(uint256,address)"(
-      _amount: BigNumberish,
-      _recipient: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

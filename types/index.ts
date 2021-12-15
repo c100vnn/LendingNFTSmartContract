@@ -25,6 +25,8 @@ export type { NFTMarket } from "./NFTMarket";
 export type { RewardPool } from "./RewardPool";
 export type { Reserve } from "./Reserve";
 export type { Staking } from "./Staking";
+export type { ReserveTest } from "./ReserveTest";
+export type { StakingTest } from "./StakingTest";
 
 export { AccessControl__factory } from "./factories/AccessControl__factory";
 export { IAccessControl__factory } from "./factories/IAccessControl__factory";
@@ -50,3 +52,5 @@ export { NFTMarket__factory } from "./factories/NFTMarket__factory";
 export { RewardPool__factory } from "./factories/RewardPool__factory";
 export { Reserve__factory } from "./factories/Reserve__factory";
 export { Staking__factory } from "./factories/Staking__factory";
+export { ReserveTest__factory } from "./factories/ReserveTest__factory";
+export { StakingTest__factory } from "./factories/StakingTest__factory";

@@ -108,6 +108,14 @@ declare module "hardhat/types/runtime" {
       name: "Staking",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Staking__factory>;
+    getContractFactory(
+      name: "ReserveTest",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ReserveTest__factory>;
+    getContractFactory(
+      name: "StakingTest",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.StakingTest__factory>;
 
     getContractAt(
       name: "AccessControl",
@@ -229,6 +237,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Staking>;
+    getContractAt(
+      name: "ReserveTest",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ReserveTest>;
+    getContractAt(
+      name: "StakingTest",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.StakingTest>;
 
     // default types
     getContractFactory(

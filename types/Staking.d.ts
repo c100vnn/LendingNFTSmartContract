@@ -21,160 +21,175 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface StakingInterface extends ethers.utils.Interface {
   functions: {
-    "addStake(uint256)": FunctionFragment;
-    "calculateUserReward(address)": FunctionFragment;
-    "claimReward()": FunctionFragment;
-    "getStakeInfo(address)": FunctionFragment;
-    "getTotalSupply()": FunctionFragment;
-    "lastUpdateTime()": FunctionFragment;
+    "addStakePackage(uint256,uint256,uint256)": FunctionFragment;
+    "calculateMyProfit(uint256)": FunctionFragment;
+    "decimals()": FunctionFragment;
+    "getAprOfPackage(uint256)": FunctionFragment;
+    "getStakePackages()": FunctionFragment;
     "mainToken()": FunctionFragment;
     "owner()": FunctionFragment;
+    "removeStakePackage(uint256)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "reserve()": FunctionFragment;
-    "rewardPerToken()": FunctionFragment;
-    "rewardPerTokenStake()": FunctionFragment;
-    "rewardRate()": FunctionFragment;
     "setReserve(address)": FunctionFragment;
+    "stake(uint256,uint256)": FunctionFragment;
+    "stakePackages(uint256)": FunctionFragment;
+    "stakes(address,uint256)": FunctionFragment;
+    "takeProfit(uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "userRewardPerStake(address)": FunctionFragment;
-    "userToRewards(address)": FunctionFragment;
-    "userToStakeInfo(address)": FunctionFragment;
-    "withdrawStake(uint256)": FunctionFragment;
+    "unStake(uint256,uint256)": FunctionFragment;
+    "updateStakePackage(uint256,uint256,uint256,uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "addStake",
+    functionFragment: "addStakePackage",
+    values: [BigNumberish, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "calculateMyProfit",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getAprOfPackage",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "calculateUserReward",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimReward",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getStakeInfo",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getTotalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastUpdateTime",
+    functionFragment: "getStakePackages",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "mainToken", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "removeStakePackage",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "reserve", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rewardPerToken",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardPerTokenStake",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardRate",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "setReserve", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "stake",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "stakePackages",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "stakes",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "takeProfit",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "userRewardPerStake",
-    values: [string]
+    functionFragment: "unStake",
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "userToRewards",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "userToStakeInfo",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawStake",
-    values: [BigNumberish]
+    functionFragment: "updateStakePackage",
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string;
 
-  decodeFunctionResult(functionFragment: "addStake", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "calculateUserReward",
+    functionFragment: "addStakePackage",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "claimReward",
+    functionFragment: "calculateMyProfit",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getAprOfPackage",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getStakeInfo",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getTotalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastUpdateTime",
+    functionFragment: "getStakePackages",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "mainToken", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "removeStakePackage",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "reserve", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardPerToken",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardPerTokenStake",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "rewardRate", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "setReserve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "stakePackages",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "stakes", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "takeProfit", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "unStake", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "userRewardPerStake",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "userToRewards",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "userToStakeInfo",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawStake",
+    functionFragment: "updateStakePackage",
     data: BytesLike
   ): Result;
 
   events: {
     "OwnershipTransferred(address,address)": EventFragment;
+    "ProfitTaked(address,uint256,uint256,uint256,uint256)": EventFragment;
+    "StakeReleased(address,uint256,uint256,uint256,uint256)": EventFragment;
+    "StakeUpdate(address,uint256,uint256,uint256,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ProfitTaked"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "StakeReleased"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "StakeUpdate"): EventFragment;
 }
 
 export type OwnershipTransferredEvent = TypedEvent<
   [string, string] & { previousOwner: string; newOwner: string }
+>;
+
+export type ProfitTakedEvent = TypedEvent<
+  [string, BigNumber, BigNumber, BigNumber, BigNumber] & {
+    account: string;
+    packageId: BigNumber;
+    timestamp: BigNumber;
+    profitTaked: BigNumber;
+    totalProfit: BigNumber;
+  }
+>;
+
+export type StakeReleasedEvent = TypedEvent<
+  [string, BigNumber, BigNumber, BigNumber, BigNumber] & {
+    account: string;
+    packageId: BigNumber;
+    timestamp: BigNumber;
+    subAmount: BigNumber;
+    totalProfit: BigNumber;
+  }
+>;
+
+export type StakeUpdateEvent = TypedEvent<
+  [string, BigNumber, BigNumber, BigNumber, BigNumber] & {
+    account: string;
+    packageId: BigNumber;
+    timestamp: BigNumber;
+    addingAmount: BigNumber;
+    totalProfit: BigNumber;
+  }
 >;
 
 export class Staking extends BaseContract {
@@ -221,55 +236,67 @@ export class Staking extends BaseContract {
   interface: StakingInterface;
 
   functions: {
-    addStake(
-      _amount: BigNumberish,
+    addStakePackage(
+      _rate: BigNumberish,
+      _minStaking: BigNumberish,
+      _lockDays: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "addStake(uint256)"(
-      _amount: BigNumberish,
+    "addStakePackage(uint256,uint256,uint256)"(
+      _rate: BigNumberish,
+      _minStaking: BigNumberish,
+      _lockDays: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    calculateUserReward(
-      account: string,
+    calculateMyProfit(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    "calculateUserReward(address)"(
-      account: string,
+    "calculateMyProfit(uint256)"(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    claimReward(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    "claimReward()"(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    "decimals()"(overrides?: CallOverrides): Promise<[number]>;
 
-    getStakeInfo(
-      account: string,
+    getAprOfPackage(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "getAprOfPackage(uint256)"(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    getStakePackages(
       overrides?: CallOverrides
     ): Promise<
-      [[BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }]
+      [
+        ([BigNumber, BigNumber, BigNumber] & {
+          rate: BigNumber;
+          minStaking: BigNumber;
+          lockDays: BigNumber;
+        })[]
+      ]
     >;
 
-    "getStakeInfo(address)"(
-      account: string,
+    "getStakePackages()"(
       overrides?: CallOverrides
     ): Promise<
-      [[BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }]
+      [
+        ([BigNumber, BigNumber, BigNumber] & {
+          rate: BigNumber;
+          minStaking: BigNumber;
+          lockDays: BigNumber;
+        })[]
+      ]
     >;
-
-    getTotalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "getTotalSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    lastUpdateTime(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "lastUpdateTime()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mainToken(overrides?: CallOverrides): Promise<[string]>;
 
@@ -278,6 +305,16 @@ export class Staking extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     "owner()"(overrides?: CallOverrides): Promise<[string]>;
+
+    removeStakePackage(
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "removeStakePackage(uint256)"(
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -291,25 +328,81 @@ export class Staking extends BaseContract {
 
     "reserve()"(overrides?: CallOverrides): Promise<[string]>;
 
-    rewardPerToken(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "rewardPerToken()"(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    rewardPerTokenStake(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "rewardPerTokenStake()"(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    rewardRate(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    "rewardRate()"(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     setReserve(
-      _reserve: string,
+      _reserveAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     "setReserve(address)"(
-      _reserve: string,
+      _reserveAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    stake(
+      _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "stake(uint256,uint256)"(
+      _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    stakePackages(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        rate: BigNumber;
+        minStaking: BigNumber;
+        lockDays: BigNumber;
+      }
+    >;
+
+    "stakePackages(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        rate: BigNumber;
+        minStaking: BigNumber;
+        lockDays: BigNumber;
+      }
+    >;
+
+    stakes(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        timePoint: BigNumber;
+        amount: BigNumber;
+        totalProfit: BigNumber;
+      }
+    >;
+
+    "stakes(address,uint256)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        timePoint: BigNumber;
+        amount: BigNumber;
+        totalProfit: BigNumber;
+      }
+    >;
+
+    takeProfit(
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "takeProfit(uint256)"(
+      _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -323,100 +416,92 @@ export class Staking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    userRewardPerStake(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    "userRewardPerStake(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    userToRewards(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    "userToRewards(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    userToStakeInfo(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }
-    >;
-
-    "userToStakeInfo(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }
-    >;
-
-    withdrawStake(
+    unStake(
       _amount: BigNumberish,
+      _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "withdrawStake(uint256)"(
+    "unStake(uint256,uint256)"(
       _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    updateStakePackage(
+      _packageId: BigNumberish,
+      _newRate: BigNumberish,
+      _newMinStaking: BigNumberish,
+      _newLockDays: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "updateStakePackage(uint256,uint256,uint256,uint256)"(
+      _packageId: BigNumberish,
+      _newRate: BigNumberish,
+      _newMinStaking: BigNumberish,
+      _newLockDays: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
 
-  addStake(
-    _amount: BigNumberish,
+  addStakePackage(
+    _rate: BigNumberish,
+    _minStaking: BigNumberish,
+    _lockDays: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "addStake(uint256)"(
-    _amount: BigNumberish,
+  "addStakePackage(uint256,uint256,uint256)"(
+    _rate: BigNumberish,
+    _minStaking: BigNumberish,
+    _lockDays: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  calculateUserReward(
-    account: string,
+  calculateMyProfit(
+    _packageId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  "calculateUserReward(address)"(
-    account: string,
+  "calculateMyProfit(uint256)"(
+    _packageId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  claimReward(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  decimals(overrides?: CallOverrides): Promise<number>;
 
-  "claimReward()"(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  "decimals()"(overrides?: CallOverrides): Promise<number>;
 
-  getStakeInfo(
-    account: string,
+  getAprOfPackage(
+    _packageId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "getAprOfPackage(uint256)"(
+    _packageId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  getStakePackages(
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }
+    ([BigNumber, BigNumber, BigNumber] & {
+      rate: BigNumber;
+      minStaking: BigNumber;
+      lockDays: BigNumber;
+    })[]
   >;
 
-  "getStakeInfo(address)"(
-    account: string,
+  "getStakePackages()"(
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }
+    ([BigNumber, BigNumber, BigNumber] & {
+      rate: BigNumber;
+      minStaking: BigNumber;
+      lockDays: BigNumber;
+    })[]
   >;
-
-  getTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "getTotalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-  lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "lastUpdateTime()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   mainToken(overrides?: CallOverrides): Promise<string>;
 
@@ -425,6 +510,16 @@ export class Staking extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   "owner()"(overrides?: CallOverrides): Promise<string>;
+
+  removeStakePackage(
+    _packageId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "removeStakePackage(uint256)"(
+    _packageId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -438,25 +533,81 @@ export class Staking extends BaseContract {
 
   "reserve()"(overrides?: CallOverrides): Promise<string>;
 
-  rewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "rewardPerToken()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-  rewardPerTokenStake(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "rewardPerTokenStake()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-  rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "rewardRate()"(overrides?: CallOverrides): Promise<BigNumber>;
-
   setReserve(
-    _reserve: string,
+    _reserveAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   "setReserve(address)"(
-    _reserve: string,
+    _reserveAddress: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  stake(
+    _amount: BigNumberish,
+    _packageId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "stake(uint256,uint256)"(
+    _amount: BigNumberish,
+    _packageId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  stakePackages(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber] & {
+      rate: BigNumber;
+      minStaking: BigNumber;
+      lockDays: BigNumber;
+    }
+  >;
+
+  "stakePackages(uint256)"(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber] & {
+      rate: BigNumber;
+      minStaking: BigNumber;
+      lockDays: BigNumber;
+    }
+  >;
+
+  stakes(
+    arg0: string,
+    arg1: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber] & {
+      timePoint: BigNumber;
+      amount: BigNumber;
+      totalProfit: BigNumber;
+    }
+  >;
+
+  "stakes(address,uint256)"(
+    arg0: string,
+    arg1: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber] & {
+      timePoint: BigNumber;
+      amount: BigNumber;
+      totalProfit: BigNumber;
+    }
+  >;
+
+  takeProfit(
+    _packageId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "takeProfit(uint256)"(
+    _packageId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -470,90 +621,92 @@ export class Staking extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  userRewardPerStake(
-    arg0: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  "userRewardPerStake(address)"(
-    arg0: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  userToRewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-  "userToRewards(address)"(
-    arg0: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  userToStakeInfo(
-    arg0: string,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }
-  >;
-
-  "userToStakeInfo(address)"(
-    arg0: string,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }
-  >;
-
-  withdrawStake(
+  unStake(
     _amount: BigNumberish,
+    _packageId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "withdrawStake(uint256)"(
+  "unStake(uint256,uint256)"(
     _amount: BigNumberish,
+    _packageId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  updateStakePackage(
+    _packageId: BigNumberish,
+    _newRate: BigNumberish,
+    _newMinStaking: BigNumberish,
+    _newLockDays: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "updateStakePackage(uint256,uint256,uint256,uint256)"(
+    _packageId: BigNumberish,
+    _newRate: BigNumberish,
+    _newMinStaking: BigNumberish,
+    _newLockDays: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addStake(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    "addStake(uint256)"(
-      _amount: BigNumberish,
+    addStakePackage(
+      _rate: BigNumberish,
+      _minStaking: BigNumberish,
+      _lockDays: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    calculateUserReward(
-      account: string,
+    "addStakePackage(uint256,uint256,uint256)"(
+      _rate: BigNumberish,
+      _minStaking: BigNumberish,
+      _lockDays: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    calculateMyProfit(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "calculateUserReward(address)"(
-      account: string,
+    "calculateMyProfit(uint256)"(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    claimReward(overrides?: CallOverrides): Promise<void>;
+    decimals(overrides?: CallOverrides): Promise<number>;
 
-    "claimReward()"(overrides?: CallOverrides): Promise<void>;
+    "decimals()"(overrides?: CallOverrides): Promise<number>;
 
-    getStakeInfo(
-      account: string,
+    getAprOfPackage(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getAprOfPackage(uint256)"(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getStakePackages(
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }
+      ([BigNumber, BigNumber, BigNumber] & {
+        rate: BigNumber;
+        minStaking: BigNumber;
+        lockDays: BigNumber;
+      })[]
     >;
 
-    "getStakeInfo(address)"(
-      account: string,
+    "getStakePackages()"(
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }
+      ([BigNumber, BigNumber, BigNumber] & {
+        rate: BigNumber;
+        minStaking: BigNumber;
+        lockDays: BigNumber;
+      })[]
     >;
-
-    getTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "getTotalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "lastUpdateTime()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     mainToken(overrides?: CallOverrides): Promise<string>;
 
@@ -563,6 +716,16 @@ export class Staking extends BaseContract {
 
     "owner()"(overrides?: CallOverrides): Promise<string>;
 
+    removeStakePackage(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "removeStakePackage(uint256)"(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     "renounceOwnership()"(overrides?: CallOverrides): Promise<void>;
@@ -571,22 +734,81 @@ export class Staking extends BaseContract {
 
     "reserve()"(overrides?: CallOverrides): Promise<string>;
 
-    rewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "rewardPerToken()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    rewardPerTokenStake(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "rewardPerTokenStake()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "rewardRate()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    setReserve(_reserve: string, overrides?: CallOverrides): Promise<void>;
+    setReserve(
+      _reserveAddress: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     "setReserve(address)"(
-      _reserve: string,
+      _reserveAddress: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    stake(
+      _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "stake(uint256,uint256)"(
+      _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    stakePackages(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        rate: BigNumber;
+        minStaking: BigNumber;
+        lockDays: BigNumber;
+      }
+    >;
+
+    "stakePackages(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        rate: BigNumber;
+        minStaking: BigNumber;
+        lockDays: BigNumber;
+      }
+    >;
+
+    stakes(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        timePoint: BigNumber;
+        amount: BigNumber;
+        totalProfit: BigNumber;
+      }
+    >;
+
+    "stakes(address,uint256)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        timePoint: BigNumber;
+        amount: BigNumber;
+        totalProfit: BigNumber;
+      }
+    >;
+
+    takeProfit(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "takeProfit(uint256)"(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -600,44 +822,31 @@ export class Staking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    userRewardPerStake(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "userRewardPerStake(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    userToRewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    "userToRewards(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    userToStakeInfo(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }
-    >;
-
-    "userToStakeInfo(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { amount: BigNumber; startTime: BigNumber }
-    >;
-
-    withdrawStake(
+    unStake(
       _amount: BigNumberish,
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "withdrawStake(uint256)"(
+    "unStake(uint256,uint256)"(
       _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    updateStakePackage(
+      _packageId: BigNumberish,
+      _newRate: BigNumberish,
+      _newMinStaking: BigNumberish,
+      _newLockDays: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "updateStakePackage(uint256,uint256,uint256,uint256)"(
+      _packageId: BigNumberish,
+      _newRate: BigNumberish,
+      _newMinStaking: BigNumberish,
+      _newLockDays: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -658,54 +867,152 @@ export class Staking extends BaseContract {
       [string, string],
       { previousOwner: string; newOwner: string }
     >;
+
+    "ProfitTaked(address,uint256,uint256,uint256,uint256)"(
+      account?: null,
+      packageId?: null,
+      timestamp?: null,
+      profitTaked?: null,
+      totalProfit?: null
+    ): TypedEventFilter<
+      [string, BigNumber, BigNumber, BigNumber, BigNumber],
+      {
+        account: string;
+        packageId: BigNumber;
+        timestamp: BigNumber;
+        profitTaked: BigNumber;
+        totalProfit: BigNumber;
+      }
+    >;
+
+    ProfitTaked(
+      account?: null,
+      packageId?: null,
+      timestamp?: null,
+      profitTaked?: null,
+      totalProfit?: null
+    ): TypedEventFilter<
+      [string, BigNumber, BigNumber, BigNumber, BigNumber],
+      {
+        account: string;
+        packageId: BigNumber;
+        timestamp: BigNumber;
+        profitTaked: BigNumber;
+        totalProfit: BigNumber;
+      }
+    >;
+
+    "StakeReleased(address,uint256,uint256,uint256,uint256)"(
+      account?: null,
+      packageId?: null,
+      timestamp?: null,
+      subAmount?: null,
+      totalProfit?: null
+    ): TypedEventFilter<
+      [string, BigNumber, BigNumber, BigNumber, BigNumber],
+      {
+        account: string;
+        packageId: BigNumber;
+        timestamp: BigNumber;
+        subAmount: BigNumber;
+        totalProfit: BigNumber;
+      }
+    >;
+
+    StakeReleased(
+      account?: null,
+      packageId?: null,
+      timestamp?: null,
+      subAmount?: null,
+      totalProfit?: null
+    ): TypedEventFilter<
+      [string, BigNumber, BigNumber, BigNumber, BigNumber],
+      {
+        account: string;
+        packageId: BigNumber;
+        timestamp: BigNumber;
+        subAmount: BigNumber;
+        totalProfit: BigNumber;
+      }
+    >;
+
+    "StakeUpdate(address,uint256,uint256,uint256,uint256)"(
+      account?: null,
+      packageId?: null,
+      timestamp?: null,
+      addingAmount?: null,
+      totalProfit?: null
+    ): TypedEventFilter<
+      [string, BigNumber, BigNumber, BigNumber, BigNumber],
+      {
+        account: string;
+        packageId: BigNumber;
+        timestamp: BigNumber;
+        addingAmount: BigNumber;
+        totalProfit: BigNumber;
+      }
+    >;
+
+    StakeUpdate(
+      account?: null,
+      packageId?: null,
+      timestamp?: null,
+      addingAmount?: null,
+      totalProfit?: null
+    ): TypedEventFilter<
+      [string, BigNumber, BigNumber, BigNumber, BigNumber],
+      {
+        account: string;
+        packageId: BigNumber;
+        timestamp: BigNumber;
+        addingAmount: BigNumber;
+        totalProfit: BigNumber;
+      }
+    >;
   };
 
   estimateGas: {
-    addStake(
-      _amount: BigNumberish,
+    addStakePackage(
+      _rate: BigNumberish,
+      _minStaking: BigNumberish,
+      _lockDays: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "addStake(uint256)"(
-      _amount: BigNumberish,
+    "addStakePackage(uint256,uint256,uint256)"(
+      _rate: BigNumberish,
+      _minStaking: BigNumberish,
+      _lockDays: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    calculateUserReward(
-      account: string,
+    calculateMyProfit(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "calculateUserReward(address)"(
-      account: string,
+    "calculateMyProfit(uint256)"(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    claimReward(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "claimReward()"(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    "decimals()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStakeInfo(
-      account: string,
+    getAprOfPackage(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "getStakeInfo(address)"(
-      account: string,
+    "getAprOfPackage(uint256)"(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+    getStakePackages(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "getTotalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "lastUpdateTime()"(overrides?: CallOverrides): Promise<BigNumber>;
+    "getStakePackages()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     mainToken(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -714,6 +1021,16 @@ export class Staking extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    removeStakePackage(
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "removeStakePackage(uint256)"(
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -727,25 +1044,57 @@ export class Staking extends BaseContract {
 
     "reserve()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "rewardPerToken()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    rewardPerTokenStake(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "rewardPerTokenStake()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "rewardRate()"(overrides?: CallOverrides): Promise<BigNumber>;
-
     setReserve(
-      _reserve: string,
+      _reserveAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     "setReserve(address)"(
-      _reserve: string,
+      _reserveAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    stake(
+      _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "stake(uint256,uint256)"(
+      _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    stakePackages(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "stakePackages(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    stakes(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "stakes(address,uint256)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    takeProfit(
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "takeProfit(uint256)"(
+      _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -759,92 +1108,77 @@ export class Staking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    userRewardPerStake(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "userRewardPerStake(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    userToRewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    "userToRewards(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    userToStakeInfo(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "userToStakeInfo(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    withdrawStake(
+    unStake(
       _amount: BigNumberish,
+      _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "withdrawStake(uint256)"(
+    "unStake(uint256,uint256)"(
       _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    updateStakePackage(
+      _packageId: BigNumberish,
+      _newRate: BigNumberish,
+      _newMinStaking: BigNumberish,
+      _newLockDays: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "updateStakePackage(uint256,uint256,uint256,uint256)"(
+      _packageId: BigNumberish,
+      _newRate: BigNumberish,
+      _newMinStaking: BigNumberish,
+      _newLockDays: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    addStake(
-      _amount: BigNumberish,
+    addStakePackage(
+      _rate: BigNumberish,
+      _minStaking: BigNumberish,
+      _lockDays: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    "addStake(uint256)"(
-      _amount: BigNumberish,
+    "addStakePackage(uint256,uint256,uint256)"(
+      _rate: BigNumberish,
+      _minStaking: BigNumberish,
+      _lockDays: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    calculateUserReward(
-      account: string,
+    calculateMyProfit(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "calculateUserReward(address)"(
-      account: string,
+    "calculateMyProfit(uint256)"(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    claimReward(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "claimReward()"(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    "decimals()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getStakeInfo(
-      account: string,
+    getAprOfPackage(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "getStakeInfo(address)"(
-      account: string,
+    "getAprOfPackage(uint256)"(
+      _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getTotalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStakePackages(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "getTotalSupply()"(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    lastUpdateTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "lastUpdateTime()"(
+    "getStakePackages()"(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -855,6 +1189,16 @@ export class Staking extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    removeStakePackage(
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "removeStakePackage(uint256)"(
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -868,31 +1212,57 @@ export class Staking extends BaseContract {
 
     "reserve()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardPerToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "rewardPerToken()"(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    rewardPerTokenStake(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "rewardPerTokenStake()"(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    rewardRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "rewardRate()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     setReserve(
-      _reserve: string,
+      _reserveAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     "setReserve(address)"(
-      _reserve: string,
+      _reserveAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    stake(
+      _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "stake(uint256,uint256)"(
+      _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    stakePackages(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "stakePackages(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    stakes(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "stakes(address,uint256)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    takeProfit(
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "takeProfit(uint256)"(
+      _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -906,43 +1276,31 @@ export class Staking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    userRewardPerStake(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "userRewardPerStake(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    userToRewards(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "userToRewards(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    userToStakeInfo(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "userToStakeInfo(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    withdrawStake(
+    unStake(
       _amount: BigNumberish,
+      _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    "withdrawStake(uint256)"(
+    "unStake(uint256,uint256)"(
       _amount: BigNumberish,
+      _packageId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateStakePackage(
+      _packageId: BigNumberish,
+      _newRate: BigNumberish,
+      _newMinStaking: BigNumberish,
+      _newLockDays: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "updateStakePackage(uint256,uint256,uint256,uint256)"(
+      _packageId: BigNumberish,
+      _newRate: BigNumberish,
+      _newMinStaking: BigNumberish,
+      _newLockDays: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

@@ -1,10 +1,18 @@
 {
-  "nft": {
-    "name": "NFT",
-    "address": "0xE96fD3CAf1F1A043Da4C47621a03955d4C6aBf7f"
+  "token": {
+    "name": "Token",
+    "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
   },
-  "ntfMarket": {
-    "name": "NFTMarket",
-    "address": "0x0eD06E4dF73855CBbb34308d96FeD23A2A2536e4"
+  "reserve": {
+    "name": "Reserve",
+    "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+  },
+  "staking": {
+    "name": "Staking",
+    "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+  },
+  "rewardPool": {
+    "name": "RewardPool",
+    "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
   }
 }

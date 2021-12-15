@@ -1,6 +1,6 @@
 import { assert, expect } from 'chai'
 import { ethers, network } from 'hardhat'
-import { Staking, Reserve, FarmFinace } from 'types'
+import { Staking, Reserve, FarmFinance } from 'types'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import Web3 from 'web3';
 import { BigNumber } from 'ethers';
@@ -9,7 +9,7 @@ describe('Staking contract', function () {
 
     let [admin, receiver1, receiver2]: SignerWithAddress[] = []
     let reserve: Reserve
-    let token: FarmFinace
+    let token: FarmFinance
     let staking: Staking
     let reserveAddress: string
     let stakingAdress: string
@@ -19,7 +19,7 @@ describe('Staking contract', function () {
         const ganache = require("ganache-core");
         const web3 = new Web3(ganache.provider());
         [admin, receiver1, receiver2] = await ethers.getSigners()
-        const Token = await ethers.getContractFactory('FarmFinace')
+        const Token = await ethers.getContractFactory('FarmFinance')
         token = await Token.deploy()
         await token.deployed()
         tokenAddress = await token.address

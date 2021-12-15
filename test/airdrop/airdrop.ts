@@ -1,6 +1,6 @@
 import { assert, expect } from 'chai'
 import { ethers } from 'hardhat'
-import { Airdrop, FarmFinace } from 'types'
+import { Airdrop, FarmFinance } from 'types'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { BigNumberish } from "ethers";
 
@@ -11,11 +11,11 @@ describe('Airdrop contract', function () {
     }
     let accounts: SignerWithAddress[] = []
     let airdrop: Airdrop
-    let token: FarmFinace
+    let token: FarmFinance
     let airdropAddress: string
     beforeEach(async () => {
         accounts = await ethers.getSigners()
-        const Token = await ethers.getContractFactory('FarmFinace')
+        const Token = await ethers.getContractFactory('FarmFinance')
         token = await Token.deploy()
         await token.deployed()
         const tokenAddress = token.address

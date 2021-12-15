@@ -4,6 +4,8 @@ export interface Contract {
 }
 
 export interface Contracts {
-  nft?: Contract
-  ntfMarket?: Contract
+  token?: Contract
+  reserve?: Contract
+  staking?: Contract
+  rewardPool?: Contract
 }

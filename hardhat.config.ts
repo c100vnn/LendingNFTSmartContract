@@ -17,9 +17,23 @@ const config: HardhatUserConfig = {
       url: 'http://127.0.0.1:8545'
     },
     rinkeby: {
-      url: `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`,
-      //accounts: [process.env.PRIVATE_KEY as string]
-    }
+      url: `https://rinkeby.infura.io/v3/123abc123abc123abc123abc123abcde`,
+      accounts: ["e888345be48217c9b2f6c1fb253f36b2944060281a0dda1b7d47369db3ae128c"]
+    },
+    mainnet: {
+      url: "https://bsc-dataseed.binance.org/",
+      chainId: 56,
+      gasPrice: 20000000000,
+      accounts: ["fcd59a4b02702b7f608b49a436ebb2f743fdaad8d9b3255bd1a3423422a5eed9"]
+
+    },
+    testnet: {
+      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
+      chainId: 97,
+      gasPrice: 20000000000,
+      accounts: ["fcd59a4b02702b7f608b49a436ebb2f743fdaad8d9b3255bd1a3423422a5eed9"]
+
+    },
   },
   solidity: {
     compilers: [

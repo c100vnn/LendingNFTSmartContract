@@ -46,8 +46,6 @@ describe('Reward pool contract', function () {
     //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
     //     await rewardPool.distributeReward(0)
-
-    //     //await network.provider.send("evm_increaseTime", [86000])
         
     //     await expect((rewardPool.connect(receiver1).requestWithdraw(rewardAmount)))
     //     .to
@@ -101,47 +99,165 @@ describe('Reward pool contract', function () {
     // })
 
   
-    it("#distributeReward should take 2% fee if request day > 5 day", async function () {
-        //emit a new event RewardDistributed
-        //struct updated in withdraws mapping
+    // it("#distributeReward should take 2% fee if request day > 5 day", async function () {
+        
+    //     const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
 
+    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+    //     await rewardPool.distributeReward(0)
+
+    //     var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
+
+    //     await network.provider.send("evm_increaseTime", [432001])
+        
+    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+    //     await rewardPool.distributeReward(1)
+
+    //     var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        
+    //     await expect(newestBalance.sub(latestBalance)) 
+    //     .to
+    //     .be
+    //     .equal('980000000000000000000');
+    // })
+
+
+    // it("#distributeReward should take 12% fee if request day between 4 and 5 day", async function () {
+        
+    //     const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+
+    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+    //     await rewardPool.distributeReward(0)
+
+    //     var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
+
+    //     await network.provider.send("evm_increaseTime", [345601])
+        
+    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+    //     await rewardPool.distributeReward(1)
+
+    //     var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        
+    //     await expect(newestBalance.sub(latestBalance)) 
+    //     .to
+    //     .be
+    //     .equal('880000000000000000000');
+    // })
+    // it("#distributeReward should take 22% fee if request day between 3 and 4 day", async function () {
+        
+    //     const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+
+    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+    //     await rewardPool.distributeReward(0)
+
+    //     var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
+
+    //     await network.provider.send("evm_increaseTime", [259201])
+        
+    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+    //     await rewardPool.distributeReward(1)
+
+    //     var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        
+    //     await expect(newestBalance.sub(latestBalance)) 
+    //     .to
+    //     .be
+    //     .equal('780000000000000000000');
+    // })
+    // it("#distributeReward should take 32% fee if request day between 2 and 3 day", async function () {
+        
+    //     const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+
+    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+    //     await rewardPool.distributeReward(0)
+
+    //     var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
+
+    //     await network.provider.send("evm_increaseTime", [172801])
+        
+    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+    //     await rewardPool.distributeReward(1)
+
+    //     var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        
+    //     await expect(newestBalance.sub(latestBalance)) 
+    //     .to
+    //     .be
+    //     .equal('680000000000000000000');
+    // })
+    // it("#distributeReward should take 42% fee if request day between 1 and 2 day", async function () {
+        
+    //     const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+
+    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+    //     await rewardPool.distributeReward(0)
+
+    //     var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
+
+    //     await network.provider.send("evm_increaseTime", [86401])
+        
+    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+    //     await rewardPool.distributeReward(1)
+
+    //     var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        
+    //     await expect(newestBalance.sub(latestBalance)) 
+    //     .to
+    //     .be
+    //     .equal('580000000000000000000');
+    // })
+   
+    it("#distributeReward 5 days in a row", async function () {
+        
         const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+
+        var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
+
+        console.log(latestBalance);
 
         await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
         await rewardPool.distributeReward(0)
 
-        var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
-
-        await network.provider.send("evm_increaseTime", [90000])
+        await network.provider.send("evm_increaseTime", [86401])
         
         await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
         await rewardPool.distributeReward(1)
 
-        var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        await network.provider.send("evm_increaseTime", [86401])
         
-        await expect(newestBalance.sub(latestBalance)) 
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+        await rewardPool.distributeReward(2)
+
+        await network.provider.send("evm_increaseTime", [86401])
+        
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+        await rewardPool.distributeReward(3)
+
+        await network.provider.send("evm_increaseTime", [86401])
+        
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        
+        await rewardPool.distributeReward(4)
+
+        var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+
+        await expect(newestBalance.sub(latestBalance))
         .to
         .be
-        .equal('980000000000000000000');
+        .equal('3300000000000000000000')
     })
-
-
-    // it("#distributeReward should take 12% fee if request day between 4 and 5 day", async function () {
-      
-    // })
-    // it("#distributeReward should take 22% fee if request day between 3 and 4 day", async function () {
-      
-    // })
-    // it("#distributeReward should take 32% fee if request day between 2 and 3 day", async function () {
-      
-    // })
-    // it("#distributeReward should take 42% fee if request day between 1 and 2 day", async function () {
-      
-    // })
-   
-    // it("#distributeReward  ", async function () {
-      
-    // })
 })

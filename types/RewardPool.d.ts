@@ -23,7 +23,7 @@ interface RewardPoolInterface extends ethers.utils.Interface {
   functions: {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "PAUSER_ROLE()": FunctionFragment;
-    "distributeReward(uint256,address)": FunctionFragment;
+    "distributeReward(uint256)": FunctionFragment;
     "getBalanceOfRewardPool()": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
@@ -51,7 +51,7 @@ interface RewardPoolInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "distributeReward",
-    values: [BigNumberish, string]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getBalanceOfRewardPool",
@@ -262,13 +262,11 @@ export class RewardPool extends BaseContract {
 
     distributeReward(
       _id: BigNumberish,
-      _user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "distributeReward(uint256,address)"(
+    "distributeReward(uint256)"(
       _id: BigNumberish,
-      _user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -423,13 +421,11 @@ export class RewardPool extends BaseContract {
 
   distributeReward(
     _id: BigNumberish,
-    _user: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "distributeReward(uint256,address)"(
+  "distributeReward(uint256)"(
     _id: BigNumberish,
-    _user: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -584,13 +580,11 @@ export class RewardPool extends BaseContract {
 
     distributeReward(
       _id: BigNumberish,
-      _user: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "distributeReward(uint256,address)"(
+    "distributeReward(uint256)"(
       _id: BigNumberish,
-      _user: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -846,13 +840,11 @@ export class RewardPool extends BaseContract {
 
     distributeReward(
       _id: BigNumberish,
-      _user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "distributeReward(uint256,address)"(
+    "distributeReward(uint256)"(
       _id: BigNumberish,
-      _user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -999,13 +991,11 @@ export class RewardPool extends BaseContract {
 
     distributeReward(
       _id: BigNumberish,
-      _user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    "distributeReward(uint256,address)"(
+    "distributeReward(uint256)"(
       _id: BigNumberish,
-      _user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

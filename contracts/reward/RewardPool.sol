@@ -35,7 +35,8 @@ contract RewardPool is AccessControl, Pausable, ReentrancyGuard {
         uint256 timestamp;
         bool isWithdrawn;
     }
-    // withdraw[withdrawId] to get withdraw informations
+    
+   // withdraw[withdrawId] to get withdraw informations
     mapping(uint256 => WithdrawTx) public withdraws;
     // lastWithdraw[userAddress] last withdraw distributed event
     mapping(address => uint256) public lastWithdraw;
@@ -72,7 +73,7 @@ contract RewardPool is AccessControl, Pausable, ReentrancyGuard {
         nonReentrant
     {
         require((block.timestamp - lastWithdraw[msg.sender]) > 86400);
-        require(_amount > minAmount);
+        require(_amount >= minAmount);
         uint256 id = _itemIds.current();
         withdraws[id] = WithdrawTx(
             id,
@@ -81,6 +82,7 @@ contract RewardPool is AccessControl, Pausable, ReentrancyGuard {
             block.timestamp,
             false
         );
+        
         emit WithdrawRequested(id, msg.sender, _amount, block.timestamp);
         _itemIds.increment();
     }
@@ -89,17 +91,17 @@ contract RewardPool is AccessControl, Pausable, ReentrancyGuard {
     // can't distribute if lastWithDraw is placed < one day
     // from day 1 to day 5, got fees: 42%, 32%, 22%, 12%, 2%
     /// @param _id amount of tokenø
-    /// @param _user amount of tokenø
-    function distributeReward(uint256 _id, address _user)
+    function distributeReward(uint256 _id)
         public
         whenNotPaused
         onlyRole(DEFAULT_ADMIN_ROLE)
         nonReentrant
     {
-        uint256 timeDuration = withdraws[_id].timestamp - lastWithdraw[_user];
+        address user = withdraws[_id].user;
+        uint256 timeDuration = withdraws[_id].timestamp - lastWithdraw[user];
         uint256 amount = withdraws[_id].amount;
-        require(timeDuration > 86400);
-        require(amount > minAmount);
+        require(timeDuration > 86400 || lastWithdraw[user] == 0, "invalid withdraw time");
+        require(amount >= minAmount, "amount must greater than or equal min amount");
         uint256 feeRate = 2;  //> 5 day
         if (timeDuration > 345600 && timeDuration < 432000) { // from day 4 to  day 5
             feeRate = 12;
@@ -112,10 +114,10 @@ contract RewardPool is AccessControl, Pausable, ReentrancyGuard {
         }
         uint256 fee = amount.mul(feeRate).div(100);
         uint256 reward = amount.sub(fee);
-        require(reward > getBalanceOfRewardPool());
-        mainToken.transfer(_user, reward);
+        require(reward < getBalanceOfRewardPool(), "not enough balance");
+        mainToken.transfer(user, reward);
         withdraws[_id].isWithdrawn = true;
-        lastWithdraw[msg.sender] = block.timestamp;
-        emit RewardDistributed(_id, msg.sender, reward, block.timestamp);
+        lastWithdraw[user] = block.timestamp;
+        emit RewardDistributed(_id, user, reward, block.timestamp);
     }
 }

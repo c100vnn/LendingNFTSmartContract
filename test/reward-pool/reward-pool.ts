@@ -40,182 +40,182 @@ describe('Reward pool contract', function () {
         console.log("reward pool balance: ",await token.balanceOf(rewardPoolAddress))
     })
 
-    // it("#requestWithdraw should revert if duration < 1 day", async function () {
-    //     const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+    it("#requestWithdraw should revert if duration < 1 day", async function () {
+        const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
         
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await rewardPool.distributeReward(0)
+        await rewardPool.distributeReward(0)
         
-    //     await expect((rewardPool.connect(receiver1).requestWithdraw(rewardAmount)))
-    //     .to
-    //     .be
-    //     .reverted;
-    // })
+        await expect((rewardPool.connect(receiver1).requestWithdraw(rewardAmount)))
+        .to
+        .be
+        .reverted;
+    })
 
-    // it("#requestWithdraw should revert if amount < min amount ", async function () {
-    //     const rewardAmount = ethers.utils.parseUnits('599', 'ether')
+    it("#requestWithdraw should revert if amount < min amount ", async function () {
+        const rewardAmount = ethers.utils.parseUnits('599', 'ether')
 
-    //     await expect((rewardPool.connect(receiver1).requestWithdraw(rewardAmount)))
-    //     .to
-    //     .be
-    //     .reverted;
-    // })
+        await expect((rewardPool.connect(receiver1).requestWithdraw(rewardAmount)))
+        .to
+        .be
+        .reverted;
+    })
 
-    // it("#requestWithdraw should revert if contract was paused ", async function () {
-    //     const rewardAmount = ethers.utils.parseUnits('600', 'ether')
+    it("#requestWithdraw should revert if contract was paused ", async function () {
+        const rewardAmount = ethers.utils.parseUnits('600', 'ether')
 
-    //     await rewardPool.pause()
+        await rewardPool.pause()
 
-    //     await expect((rewardPool.connect(receiver1).requestWithdraw(rewardAmount)))
-    //     .to
-    //     .be
-    //     .reverted;
+        await expect((rewardPool.connect(receiver1).requestWithdraw(rewardAmount)))
+        .to
+        .be
+        .reverted;
 
-    // })
+    })
 
-    // it("#requestWithdraw should submit correctly", async function () {
-    //   // emit a new event WithdrawRequested
-    //   // a new struct created in withdraws mapping
+    it("#requestWithdraw should submit correctly", async function () {
+      // emit a new event WithdrawRequested
+      // a new struct created in withdraws mapping
 
-    //     const rewardAmount = ethers.utils.parseUnits('600', 'ether')
+        const rewardAmount = ethers.utils.parseUnits('600', 'ether')
 
-    //     await expect(rewardPool.connect(receiver1).requestWithdraw(rewardAmount))
-    //     .to
-    //     .emit(rewardPool, 'WithdrawRequested')
-    //     .withArgs((await rewardPool.withdraws(0)).id, (await rewardPool.withdraws(0)).user, (await rewardPool.withdraws(0)).amount, (await rewardPool.withdraws(0)).timestamp)
+        await expect(rewardPool.connect(receiver1).requestWithdraw(rewardAmount))
+        .to
+        .emit(rewardPool, 'WithdrawRequested')
+        .withArgs((await rewardPool.withdraws(0)).id, (await rewardPool.withdraws(0)).user, (await rewardPool.withdraws(0)).amount, (await rewardPool.withdraws(0)).timestamp)
 
-    // })
+    })
 
-    // it("#distributeReward should revert if not admin ", async function () {
-    //     const rewardAmount = ethers.utils.parseUnits('600', 'ether')
+    it("#distributeReward should revert if not admin ", async function () {
+        const rewardAmount = ethers.utils.parseUnits('600', 'ether')
 
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await expect( rewardPool.connect(receiver1).distributeReward(0))
-    //     .to
-    //     .be
-    //     .reverted;
-    // })
+        await expect( rewardPool.connect(receiver1).distributeReward(0))
+        .to
+        .be
+        .reverted;
+    })
 
   
-    // it("#distributeReward should take 2% fee if request day > 5 day", async function () {
+    it("#distributeReward should take 2% fee if request day > 5 day", async function () {
         
-    //     const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+        const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
 
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await rewardPool.distributeReward(0)
+        await rewardPool.distributeReward(0)
 
-    //     var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
 
-    //     await network.provider.send("evm_increaseTime", [432001])
+        await network.provider.send("evm_increaseTime", [432001])
         
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await rewardPool.distributeReward(1)
+        await rewardPool.distributeReward(1)
 
-    //     var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
         
-    //     await expect(newestBalance.sub(latestBalance)) 
-    //     .to
-    //     .be
-    //     .equal('980000000000000000000');
-    // })
+        await expect(newestBalance.sub(latestBalance)) 
+        .to
+        .be
+        .equal('980000000000000000000');
+    })
 
 
-    // it("#distributeReward should take 12% fee if request day between 4 and 5 day", async function () {
+    it("#distributeReward should take 12% fee if request day between 4 and 5 day", async function () {
         
-    //     const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+        const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
 
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await rewardPool.distributeReward(0)
+        await rewardPool.distributeReward(0)
 
-    //     var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
 
-    //     await network.provider.send("evm_increaseTime", [345601])
+        await network.provider.send("evm_increaseTime", [345601])
         
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await rewardPool.distributeReward(1)
+        await rewardPool.distributeReward(1)
 
-    //     var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
         
-    //     await expect(newestBalance.sub(latestBalance)) 
-    //     .to
-    //     .be
-    //     .equal('880000000000000000000');
-    // })
-    // it("#distributeReward should take 22% fee if request day between 3 and 4 day", async function () {
+        await expect(newestBalance.sub(latestBalance)) 
+        .to
+        .be
+        .equal('880000000000000000000');
+    })
+    it("#distributeReward should take 22% fee if request day between 3 and 4 day", async function () {
         
-    //     const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+        const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
 
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await rewardPool.distributeReward(0)
+        await rewardPool.distributeReward(0)
 
-    //     var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
 
-    //     await network.provider.send("evm_increaseTime", [259201])
+        await network.provider.send("evm_increaseTime", [259201])
         
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await rewardPool.distributeReward(1)
+        await rewardPool.distributeReward(1)
 
-    //     var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
         
-    //     await expect(newestBalance.sub(latestBalance)) 
-    //     .to
-    //     .be
-    //     .equal('780000000000000000000');
-    // })
-    // it("#distributeReward should take 32% fee if request day between 2 and 3 day", async function () {
+        await expect(newestBalance.sub(latestBalance)) 
+        .to
+        .be
+        .equal('780000000000000000000');
+    })
+    it("#distributeReward should take 32% fee if request day between 2 and 3 day", async function () {
         
-    //     const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+        const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
 
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await rewardPool.distributeReward(0)
+        await rewardPool.distributeReward(0)
 
-    //     var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
 
-    //     await network.provider.send("evm_increaseTime", [172801])
+        await network.provider.send("evm_increaseTime", [172801])
         
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await rewardPool.distributeReward(1)
+        await rewardPool.distributeReward(1)
 
-    //     var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
         
-    //     await expect(newestBalance.sub(latestBalance)) 
-    //     .to
-    //     .be
-    //     .equal('680000000000000000000');
-    // })
-    // it("#distributeReward should take 42% fee if request day between 1 and 2 day", async function () {
+        await expect(newestBalance.sub(latestBalance)) 
+        .to
+        .be
+        .equal('680000000000000000000');
+    })
+    it("#distributeReward should take 42% fee if request day between 1 and 2 day", async function () {
         
-    //     const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
+        const rewardAmount = ethers.utils.parseUnits('1000', 'ether')
 
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await rewardPool.distributeReward(0)
+        await rewardPool.distributeReward(0)
 
-    //     var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        var latestBalance : BigNumber = await token.balanceOf(receiver1.address)
 
-    //     await network.provider.send("evm_increaseTime", [86401])
+        await network.provider.send("evm_increaseTime", [86401])
         
-    //     await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
+        await rewardPool.connect(receiver1).requestWithdraw(rewardAmount)
         
-    //     await rewardPool.distributeReward(1)
+        await rewardPool.distributeReward(1)
 
-    //     var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
+        var newestBalance : BigNumber = await token.balanceOf(receiver1.address)
         
-    //     await expect(newestBalance.sub(latestBalance)) 
-    //     .to
-    //     .be
-    //     .equal('580000000000000000000');
-    // })
+        await expect(newestBalance.sub(latestBalance)) 
+        .to
+        .be
+        .equal('580000000000000000000');
+    })
    
     it("#distributeReward 5 days in a row", async function () {
         

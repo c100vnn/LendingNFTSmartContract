@@ -31,13 +31,13 @@ interface StakingInterface extends ethers.utils.Interface {
     "removeStakePackage(uint256)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "reserve()": FunctionFragment;
+    "setMaxStake(uint256)": FunctionFragment;
     "setReserve(address)": FunctionFragment;
     "stake(uint256,uint256)": FunctionFragment;
     "stakePackages(uint256)": FunctionFragment;
     "stakes(address,uint256)": FunctionFragment;
-    "takeProfit(uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "unStake(uint256,uint256)": FunctionFragment;
+    "unStake(uint256)": FunctionFragment;
     "updateStakePackage(uint256,uint256,uint256,uint256)": FunctionFragment;
   };
 
@@ -69,6 +69,10 @@ interface StakingInterface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "reserve", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "setMaxStake",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "setReserve", values: [string]): string;
   encodeFunctionData(
     functionFragment: "stake",
@@ -83,16 +87,12 @@ interface StakingInterface extends ethers.utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "takeProfit",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "unStake",
-    values: [BigNumberish, BigNumberish]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateStakePackage",
@@ -127,6 +127,10 @@ interface StakingInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "reserve", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setMaxStake",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "setReserve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
   decodeFunctionResult(
@@ -134,7 +138,6 @@ interface StakingInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "stakes", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "takeProfit", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
@@ -147,13 +150,11 @@ interface StakingInterface extends ethers.utils.Interface {
 
   events: {
     "OwnershipTransferred(address,address)": EventFragment;
-    "ProfitTaked(address,uint256,uint256,uint256,uint256)": EventFragment;
     "StakeReleased(address,uint256,uint256,uint256,uint256)": EventFragment;
     "StakeUpdate(address,uint256,uint256,uint256,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ProfitTaked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "StakeReleased"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "StakeUpdate"): EventFragment;
 }
@@ -162,22 +163,12 @@ export type OwnershipTransferredEvent = TypedEvent<
   [string, string] & { previousOwner: string; newOwner: string }
 >;
 
-export type ProfitTakedEvent = TypedEvent<
-  [string, BigNumber, BigNumber, BigNumber, BigNumber] & {
-    account: string;
-    packageId: BigNumber;
-    timestamp: BigNumber;
-    profitTaked: BigNumber;
-    totalProfit: BigNumber;
-  }
->;
-
 export type StakeReleasedEvent = TypedEvent<
   [string, BigNumber, BigNumber, BigNumber, BigNumber] & {
     account: string;
     packageId: BigNumber;
     timestamp: BigNumber;
-    subAmount: BigNumber;
+    amount: BigNumber;
     totalProfit: BigNumber;
   }
 >;
@@ -187,7 +178,7 @@ export type StakeUpdateEvent = TypedEvent<
     account: string;
     packageId: BigNumber;
     timestamp: BigNumber;
-    addingAmount: BigNumber;
+    amount: BigNumber;
     totalProfit: BigNumber;
   }
 >;
@@ -328,6 +319,16 @@ export class Staking extends BaseContract {
 
     "reserve()"(overrides?: CallOverrides): Promise<[string]>;
 
+    setMaxStake(
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "setMaxStake(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     setReserve(
       _reserveAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -377,7 +378,8 @@ export class Staking extends BaseContract {
       arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        startTime: BigNumber;
         timePoint: BigNumber;
         amount: BigNumber;
         totalProfit: BigNumber;
@@ -389,22 +391,13 @@ export class Staking extends BaseContract {
       arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        startTime: BigNumber;
         timePoint: BigNumber;
         amount: BigNumber;
         totalProfit: BigNumber;
       }
     >;
-
-    takeProfit(
-      _packageId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    "takeProfit(uint256)"(
-      _packageId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: string,
@@ -417,13 +410,11 @@ export class Staking extends BaseContract {
     ): Promise<ContractTransaction>;
 
     unStake(
-      _amount: BigNumberish,
       _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "unStake(uint256,uint256)"(
-      _amount: BigNumberish,
+    "unStake(uint256)"(
       _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -533,6 +524,16 @@ export class Staking extends BaseContract {
 
   "reserve()"(overrides?: CallOverrides): Promise<string>;
 
+  setMaxStake(
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "setMaxStake(uint256)"(
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   setReserve(
     _reserveAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -582,7 +583,8 @@ export class Staking extends BaseContract {
     arg1: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, BigNumber, BigNumber] & {
+    [BigNumber, BigNumber, BigNumber, BigNumber] & {
+      startTime: BigNumber;
       timePoint: BigNumber;
       amount: BigNumber;
       totalProfit: BigNumber;
@@ -594,22 +596,13 @@ export class Staking extends BaseContract {
     arg1: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, BigNumber, BigNumber] & {
+    [BigNumber, BigNumber, BigNumber, BigNumber] & {
+      startTime: BigNumber;
       timePoint: BigNumber;
       amount: BigNumber;
       totalProfit: BigNumber;
     }
   >;
-
-  takeProfit(
-    _packageId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  "takeProfit(uint256)"(
-    _packageId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: string,
@@ -622,13 +615,11 @@ export class Staking extends BaseContract {
   ): Promise<ContractTransaction>;
 
   unStake(
-    _amount: BigNumberish,
     _packageId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "unStake(uint256,uint256)"(
-    _amount: BigNumberish,
+  "unStake(uint256)"(
     _packageId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -734,6 +725,16 @@ export class Staking extends BaseContract {
 
     "reserve()"(overrides?: CallOverrides): Promise<string>;
 
+    setMaxStake(
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "setMaxStake(uint256)"(
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setReserve(
       _reserveAddress: string,
       overrides?: CallOverrides
@@ -783,7 +784,8 @@ export class Staking extends BaseContract {
       arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        startTime: BigNumber;
         timePoint: BigNumber;
         amount: BigNumber;
         totalProfit: BigNumber;
@@ -795,22 +797,13 @@ export class Staking extends BaseContract {
       arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        startTime: BigNumber;
         timePoint: BigNumber;
         amount: BigNumber;
         totalProfit: BigNumber;
       }
     >;
-
-    takeProfit(
-      _packageId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "takeProfit(uint256)"(
-      _packageId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     transferOwnership(
       newOwner: string,
@@ -822,14 +815,9 @@ export class Staking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    unStake(
-      _amount: BigNumberish,
-      _packageId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    unStake(_packageId: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    "unStake(uint256,uint256)"(
-      _amount: BigNumberish,
+    "unStake(uint256)"(
       _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -868,45 +856,11 @@ export class Staking extends BaseContract {
       { previousOwner: string; newOwner: string }
     >;
 
-    "ProfitTaked(address,uint256,uint256,uint256,uint256)"(
-      account?: null,
-      packageId?: null,
-      timestamp?: null,
-      profitTaked?: null,
-      totalProfit?: null
-    ): TypedEventFilter<
-      [string, BigNumber, BigNumber, BigNumber, BigNumber],
-      {
-        account: string;
-        packageId: BigNumber;
-        timestamp: BigNumber;
-        profitTaked: BigNumber;
-        totalProfit: BigNumber;
-      }
-    >;
-
-    ProfitTaked(
-      account?: null,
-      packageId?: null,
-      timestamp?: null,
-      profitTaked?: null,
-      totalProfit?: null
-    ): TypedEventFilter<
-      [string, BigNumber, BigNumber, BigNumber, BigNumber],
-      {
-        account: string;
-        packageId: BigNumber;
-        timestamp: BigNumber;
-        profitTaked: BigNumber;
-        totalProfit: BigNumber;
-      }
-    >;
-
     "StakeReleased(address,uint256,uint256,uint256,uint256)"(
       account?: null,
       packageId?: null,
       timestamp?: null,
-      subAmount?: null,
+      amount?: null,
       totalProfit?: null
     ): TypedEventFilter<
       [string, BigNumber, BigNumber, BigNumber, BigNumber],
@@ -914,7 +868,7 @@ export class Staking extends BaseContract {
         account: string;
         packageId: BigNumber;
         timestamp: BigNumber;
-        subAmount: BigNumber;
+        amount: BigNumber;
         totalProfit: BigNumber;
       }
     >;
@@ -923,7 +877,7 @@ export class Staking extends BaseContract {
       account?: null,
       packageId?: null,
       timestamp?: null,
-      subAmount?: null,
+      amount?: null,
       totalProfit?: null
     ): TypedEventFilter<
       [string, BigNumber, BigNumber, BigNumber, BigNumber],
@@ -931,7 +885,7 @@ export class Staking extends BaseContract {
         account: string;
         packageId: BigNumber;
         timestamp: BigNumber;
-        subAmount: BigNumber;
+        amount: BigNumber;
         totalProfit: BigNumber;
       }
     >;
@@ -940,7 +894,7 @@ export class Staking extends BaseContract {
       account?: null,
       packageId?: null,
       timestamp?: null,
-      addingAmount?: null,
+      amount?: null,
       totalProfit?: null
     ): TypedEventFilter<
       [string, BigNumber, BigNumber, BigNumber, BigNumber],
@@ -948,7 +902,7 @@ export class Staking extends BaseContract {
         account: string;
         packageId: BigNumber;
         timestamp: BigNumber;
-        addingAmount: BigNumber;
+        amount: BigNumber;
         totalProfit: BigNumber;
       }
     >;
@@ -957,7 +911,7 @@ export class Staking extends BaseContract {
       account?: null,
       packageId?: null,
       timestamp?: null,
-      addingAmount?: null,
+      amount?: null,
       totalProfit?: null
     ): TypedEventFilter<
       [string, BigNumber, BigNumber, BigNumber, BigNumber],
@@ -965,7 +919,7 @@ export class Staking extends BaseContract {
         account: string;
         packageId: BigNumber;
         timestamp: BigNumber;
-        addingAmount: BigNumber;
+        amount: BigNumber;
         totalProfit: BigNumber;
       }
     >;
@@ -1044,6 +998,16 @@ export class Staking extends BaseContract {
 
     "reserve()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    setMaxStake(
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "setMaxStake(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     setReserve(
       _reserveAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1088,16 +1052,6 @@ export class Staking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    takeProfit(
-      _packageId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    "takeProfit(uint256)"(
-      _packageId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1109,13 +1063,11 @@ export class Staking extends BaseContract {
     ): Promise<BigNumber>;
 
     unStake(
-      _amount: BigNumberish,
       _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "unStake(uint256,uint256)"(
-      _amount: BigNumberish,
+    "unStake(uint256)"(
       _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1212,6 +1164,16 @@ export class Staking extends BaseContract {
 
     "reserve()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    setMaxStake(
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "setMaxStake(uint256)"(
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     setReserve(
       _reserveAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1256,16 +1218,6 @@ export class Staking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    takeProfit(
-      _packageId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "takeProfit(uint256)"(
-      _packageId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1277,13 +1229,11 @@ export class Staking extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     unStake(
-      _amount: BigNumberish,
       _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    "unStake(uint256,uint256)"(
-      _amount: BigNumberish,
+    "unStake(uint256)"(
       _packageId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;

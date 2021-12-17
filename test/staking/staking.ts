@@ -14,7 +14,7 @@ describe('Staking contract', function () {
     let reserveAddress: string
     let stakingAdress: string
     let tokenAddress: string
-    let reserveAmount: string = "10000000000000000000000000" // 99000000*10^18
+    let reserveAmount: string = "10000000000000000000000000" // 10000000*10^18
     beforeEach(async () => {
         const ganache = require("ganache-core");
         const web3 = new Web3(ganache.provider());
@@ -73,6 +73,8 @@ describe('Staking contract', function () {
             await token.connect(receiver1).approve(stakingAdress, ethers.utils.parseUnits("1000", "ether"))
             let stakeTx = await staking.connect(receiver1).stake(ethers.utils.parseUnits("1000", "ether"), 0)
             let stakeInfo = await staking.stakes(receiver1.address, 0)
+            expect (stakeInfo.amount).to.be.equal(ethers.utils.parseUnits("1000", "ether"))
+            expect (stakeInfo.totalProfit).to.be.equal(0)
             await expect(stakeTx).to.emit(staking, 'StakeUpdate')
                 .withArgs(receiver1.address, 0, stakeInfo.timePoint, ethers.utils.parseUnits("1000", "ether"), ethers.utils.parseUnits("0", "ether"));
             await expect(await token.balanceOf(receiver1.address)).to.be.equal(0)
@@ -84,61 +86,65 @@ describe('Staking contract', function () {
             await token.connect(receiver1).approve(stakingAdress, ethers.utils.parseUnits("1000", "ether"))
             let stakeTx = await staking.connect(receiver1).stake(ethers.utils.parseUnits("1000", "ether"), 0)
             let stakeInfo = await staking.stakes(receiver1.address, 0)
+            await expect(await token.balanceOf(receiver1.address)).to.be.equal(0)
         })
         it("should revert if not reach locktime", async function () {
-            await expect(staking.connect(receiver1).unStake(ethers.utils.parseUnits("1000", "ether"), 0)).to.be.revertedWith('not reach lock time')
+            await expect(staking.connect(receiver1).unStake(0)).to.be.revertedWith('not reach lock time')
         })
-        it("should revert if amount > stake amount", async function () {
+        it("should unstake correctly 1", async function () {
+            
             await network.provider.send("evm_increaseTime", [86400 * 5 + 100])
-            await expect(staking.connect(receiver1).unStake(ethers.utils.parseUnits("1010", "ether"), 0)).to.be.revertedWith('amount must less than stake amount')
-        })
-        it("should unstake correctly", async function () {
-            await network.provider.send("evm_increaseTime", [86400 * 5 + 100])
-            let stakeInfo = await staking.stakes(receiver1.address, 0)
-            console.log(stakeInfo.timePoint)
-            let unStakeTx = await staking.connect(receiver1).unStake(ethers.utils.parseUnits("1000", "ether"), 0)
-            stakeInfo = await staking.stakes(receiver1.address, 0)
+            await token.approve(stakingAdress, ethers.utils.parseUnits("1000", "ether"))
+           // let stakeTx = await staking.stake(ethers.utils.parseUnits("1000", "ether"), 0)
+            expect(await staking.connect(receiver1).calculateMyProfit(0)).to.be.equal(ethers.utils.parseUnits("6.85", "ether"))
+            let unStakeTx = await staking.connect(receiver1).unStake(0)
+            let stakeInfoAfterRelease = await staking.stakes(receiver1.address, 0)
+            const blockNum = await ethers.provider.getBlockNumber();
+            const block = await ethers.provider.getBlock(blockNum);
             await expect(unStakeTx).to.emit(staking, 'StakeReleased')
-                .withArgs(receiver1.address, 0, stakeInfo.timePoint, ethers.utils.parseUnits("1000", "ether"), "6850000000000000000");
-            console.log(stakeInfo.timePoint);
-            expect(stakeInfo.amount).to.be.equal(0)
-            expect(stakeInfo.totalProfit).to.be.equal("6850000000000000000")
-            expect(await staking.connect(receiver1).calculateMyProfit(0)).to.be.equal("6850000000000000000")
+                .withArgs(receiver1.address, 0, block.timestamp, ethers.utils.parseUnits("1000", "ether"), ethers.utils.parseUnits("6.85", "ether"));
+            await expect(await token.balanceOf(receiver1.address)).to.be.equal(ethers.utils.parseUnits("1006.85", "ether"))
+            expect(stakeInfoAfterRelease.amount).to.be.equal(0)
+            expect(stakeInfoAfterRelease.totalProfit).to.be.equal("0")
+            expect(await staking.connect(receiver1).calculateMyProfit(0)).to.be.equal("0")
+            expect(await token.balanceOf(reserveAddress)).to.be.equal(ethers.utils.parseUnits("9999993.15", "ether"))
 
         })
         //1496.5
-        it("should stake correctly", async function () {
+        it("should unstake correctly 2", async function () {
+            token.transfer(receiver1.address, ethers.utils.parseUnits("1000", "ether"))
             await network.provider.send("evm_increaseTime", [86400 * 5 + 100])
-            let stakeInfo = await staking.stakes(receiver1.address, 0)
-            console.log(stakeInfo.timePoint)
-            let unStakeTx = await staking.connect(receiver1).unStake(ethers.utils.parseUnits("500", "ether"), 0)
-            stakeInfo = await staking.stakes(receiver1.address, 0)
-            await expect(unStakeTx).to.emit(staking, 'StakeReleased')
-                .withArgs(receiver1.address, 0, stakeInfo.timePoint, ethers.utils.parseUnits("500", "ether"), "6850000000000000000");
-            console.log(stakeInfo.timePoint);
-            expect(stakeInfo.amount).to.be.equal(ethers.utils.parseUnits("500", "ether"))
-            expect(stakeInfo.totalProfit).to.be.equal("6850000000000000000")
-            expect(await staking.connect(receiver1).calculateMyProfit(0)).to.be.equal("6850000000000000000")
+            await token.approve(stakingAdress, ethers.utils.parseUnits("1", "ether"))
+           // let stakeTx = await staking.stake(ethers.utils.parseUnits("1000", "ether"), 0)
+            expect(await staking.connect(receiver1).calculateMyProfit(0)).to.be.equal(ethers.utils.parseUnits("6.85", "ether"))
 
             await token.connect(receiver1).approve(stakingAdress, ethers.utils.parseUnits("500", "ether"))
             await staking.connect(receiver1).stake(ethers.utils.parseUnits("500", "ether"), 0)
-            stakeInfo = await staking.stakes(receiver1.address, 0)
-            expect(stakeInfo.amount).to.be.equal(ethers.utils.parseUnits("1000", "ether"))
+            let stakeInfo = await staking.stakes(receiver1.address, 0)
+            expect(stakeInfo.amount).to.be.equal(ethers.utils.parseUnits("1500", "ether"))
             expect(stakeInfo.totalProfit).to.be.equal(ethers.utils.parseUnits("6.85", "ether"))
             await network.provider.send("evm_increaseTime", [86400 * 365])
-            let unStakeTx2 = await staking.connect(receiver1).unStake(ethers.utils.parseUnits("900", "ether"), 0)
+            await token.approve(stakingAdress, ethers.utils.parseUnits("1", "ether"))
+            expect(await staking.connect(receiver1).calculateMyProfit(0)).to.be.equal(ethers.utils.parseUnits("756.925", "ether"))
+
+
+
+
+
+            
+            let unStakeTx2 = await staking.connect(receiver1).unStake(0)
+            const blockNum = await ethers.provider.getBlockNumber();
+            const block = await ethers.provider.getBlock(blockNum);
             stakeInfo = await staking.stakes(receiver1.address, 0)
             await expect(unStakeTx2).to.emit(staking, 'StakeReleased')
-                .withArgs(receiver1.address, 0, stakeInfo.timePoint, ethers.utils.parseUnits("1000", "ether"), ethers.utils.parseUnits("506.9", "ether"));
+                .withArgs(receiver1.address, 0, block.timestamp, ethers.utils.parseUnits("1500", "ether"), ethers.utils.parseUnits("756.925", "ether"));
             console.log(stakeInfo.timePoint);
             expect(stakeInfo.amount).to.be.equal(0)
-            expect(stakeInfo.totalProfit).to.be.equal(ethers.utils.parseUnits("506.9", "ether"))
-            await expect(await token.balanceOf(receiver1.address)).to.be.equal(ethers.utils.parseUnits("1000", "ether"))
-            let takeRewardTx = await staking.connect(receiver1).takeProfit(0);
+            expect(stakeInfo.totalProfit).to.be.equal(ethers.utils.parseUnits("0", "ether"))
+            await expect(await token.balanceOf(receiver1.address)).to.be.equal(ethers.utils.parseUnits("2756.925", "ether"))
+            await expect(await token.balanceOf(reserveAddress)).to.be.equal(ethers.utils.parseUnits("9999243.075", "ether"))
+            //let takeRewardTx = await staking.connect(receiver1).takeProfit(0);
             stakeInfo = await staking.stakes(receiver1.address, 0)
-            await expect(takeRewardTx).to.emit(staking, 'ProfitTaked')
-                .withArgs(receiver1.address, 0, stakeInfo.timePoint, ethers.utils.parseUnits("506.9", "ether"), 0);
-            await expect(await token.balanceOf(receiver1.address)).to.be.equal(ethers.utils.parseUnits("1506.9", "ether"))
 
         })
     })

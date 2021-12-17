@@ -15,21 +15,14 @@ contract Staking is Ownable, ReentrancyGuard {
         address account,
         uint256 packageId,
         uint256 timestamp,
-        uint256 addingAmount,
+        uint256 amount,
         uint256 totalProfit
     );
     event StakeReleased(
         address account,
         uint256 packageId,
         uint256 timestamp,
-        uint256 subAmount,
-        uint256 totalProfit
-    );
-    event ProfitTaked(
-        address account,
-        uint256 packageId,
-        uint256 timestamp,
-        uint256 profitTaked,
+        uint256 amount,
         uint256 totalProfit
     );
     struct StakePackage {
@@ -39,6 +32,7 @@ contract Staking is Ownable, ReentrancyGuard {
     }
     struct StakingInfo {
         //uint256 packageId;
+        uint256 startTime;
         uint256 timePoint;
         uint256 amount;
         uint256 totalProfit;
@@ -53,19 +47,21 @@ contract Staking is Ownable, ReentrancyGuard {
      * @notice This is the initialize function, run on deploy event
      * @param _tokenAddr    address of main token
      */
-    constructor(address _tokenAddr)  {
+    constructor(address _tokenAddr) {
         mainToken = IERC20(_tokenAddr);
 
         // add free-time staking package
         StakePackage memory pk;
         pk.rate = 137;
-        pk.minStaking = 500*10**decimals();
+        pk.minStaking = 500 * 10**decimals();
         pk.lockDays = 5;
         stakePackages.push(pk);
     }
+
     function getAprOfPackage(uint256 _packageId) public view returns (uint256) {
         return stakePackages[_packageId].rate.mul(365);
     }
+
     function setReserve(address _reserveAddress) public onlyOwner {
         reserve = Reserve(_reserveAddress);
     }
@@ -107,9 +103,16 @@ contract Staking is Ownable, ReentrancyGuard {
         stakePackages[_packageId].minStaking = _newMinStaking;
         stakePackages[_packageId].lockDays = _newLockDays;
     }
+
     function getStakePackages() public view returns (StakePackage[] memory) {
         return stakePackages;
     }
+
+    function setMaxStake(uint256 _amount) public onlyOwner {
+        require(_amount > totalStake);
+        maxStake = _amount;
+    }
+
     function stake(uint256 _amount, uint256 _packageId) public {
         // validate available package and approved amount
         require(stakePackages[_packageId].rate > 0, 'Invalid package');
@@ -133,6 +136,8 @@ contract Staking is Ownable, ReentrancyGuard {
             stakes[msg.sender][_packageId].totalProfit = stakes[msg.sender][
                 _packageId
             ].totalProfit.add(profit);
+        } else {
+            stakes[msg.sender][_packageId].startTime = block.timestamp;
         }
         stakes[msg.sender][_packageId].timePoint = block.timestamp;
 
@@ -149,20 +154,16 @@ contract Staking is Ownable, ReentrancyGuard {
         );
     }
 
-    function unStake(uint256 _amount, uint256 _packageId) public {
+    function unStake(uint256 _packageId) public {
         // validate available package and approved amount
         require(stakes[msg.sender][_packageId].amount > 0, 'stake invalid');
-        require(block.timestamp.sub(stakes[msg.sender][_packageId].timePoint)>stakePackages[_packageId].lockDays.mul(86400), 'not reach lock time');
+        require(
+            block.timestamp.sub(stakes[msg.sender][_packageId].timePoint) >
+                stakePackages[_packageId].lockDays.mul(86400),
+            'not reach lock time'
+        );
         require(stakePackages[_packageId].rate > 0, 'Invalid package');
-        require(stakes[msg.sender][_packageId].amount >= _amount, 'amount must less than stake amount');
         require(stakes[msg.sender][_packageId].timePoint > 0);
-        uint256 receiveAmount = _amount;
-        if (
-            stakes[msg.sender][_packageId].amount.sub(_amount) <
-            stakePackages[_packageId].minStaking
-        ) {
-            receiveAmount = stakes[msg.sender][_packageId].amount;
-        }
         uint256 profit = (
             block
                 .timestamp
@@ -170,49 +171,24 @@ contract Staking is Ownable, ReentrancyGuard {
                 .div(86400)
                 .mul(stakePackages[_packageId].rate)
         ).mul(stakes[msg.sender][_packageId].amount).div(100000);
-        stakes[msg.sender][_packageId].totalProfit = stakes[msg.sender][
-            _packageId
-        ].totalProfit.add(profit);
-        stakes[msg.sender][_packageId].amount = stakes[msg.sender][_packageId]
-            .amount
-            .sub(receiveAmount);
-        stakes[msg.sender][_packageId].timePoint = block.timestamp;
-        mainToken.transfer(msg.sender, receiveAmount);
+        uint256 totalProfit = stakes[msg.sender][_packageId].totalProfit.add(
+            profit
+        );
+        uint256 stakeAmount = stakes[msg.sender][_packageId].amount;
+        stakes[msg.sender][_packageId].startTime = 0;
+        stakes[msg.sender][_packageId].totalProfit = 0;
+        stakes[msg.sender][_packageId].amount = 0;
+        stakes[msg.sender][_packageId].timePoint = 0;
+
+        mainToken.transfer(msg.sender, stakeAmount);
+        reserve.distributeProfit(msg.sender, totalProfit);
         emit StakeReleased(
             msg.sender,
             _packageId,
             block.timestamp,
-            receiveAmount,
-            stakes[msg.sender][_packageId].totalProfit
+            stakeAmount,
+            totalProfit
         );
-    }
-
-    function takeProfit(uint256 _packageId) public {
-        require(stakePackages[_packageId].rate > 0, 'Invalid package ID');
-        uint256 profit = (
-            block
-                .timestamp
-                .sub(stakes[msg.sender][_packageId].timePoint)
-                .div(86400)
-                .mul(stakePackages[_packageId].rate)
-        ).mul(stakes[msg.sender][_packageId].amount).div(100000);
-        require(
-            stakes[msg.sender][_packageId].totalProfit.add(profit) >= 0
-        );
-        uint256 value = stakes[msg.sender][
-            _packageId
-        ].totalProfit.add(profit);
-        stakes[msg.sender][_packageId].timePoint = block.timestamp;
-        reserve.distributeProfit(msg.sender, value);
-        stakes[msg.sender][_packageId].totalProfit = 0;
-        emit ProfitTaked(
-            msg.sender,
-            _packageId,
-            block.timestamp,
-            value,
-            stakes[msg.sender][_packageId].totalProfit
-        );
-        
     }
 
     function calculateMyProfit(uint256 _packageId)
@@ -221,6 +197,7 @@ contract Staking is Ownable, ReentrancyGuard {
         returns (uint256)
     {
         require(stakePackages[_packageId].rate > 0, 'Invalid package ID');
+        require(block.timestamp !=stakes[msg.sender][_packageId].timePoint, 'Invalid stake');
         uint256 profit = (
             block
                 .timestamp

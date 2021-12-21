@@ -3,6 +3,7 @@ import 'tsconfig-paths/register'
 import '@typechain/hardhat'
 import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-waffle'
+import "@nomiclabs/hardhat-etherscan";
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -24,7 +25,7 @@ const config: HardhatUserConfig = {
       url: "https://bsc-dataseed.binance.org/",
       chainId: 56,
       gasPrice: 20000000000,
-      accounts: ["fcd59a4b02702b7f608b49a436ebb2f743fdaad8d9b3255bd1a3423422a5eed9"]
+     // accounts: ["fcd59a4b02702b7f608b49a436ebb2f743fdaad8d9b3255bd1a3423422a5eed9"]
 
     },
     testnet: {
@@ -32,8 +33,13 @@ const config: HardhatUserConfig = {
       chainId: 97,
       gasPrice: 20000000000,
       accounts: ["fcd59a4b02702b7f608b49a436ebb2f743fdaad8d9b3255bd1a3423422a5eed9"]
-
     },
+   
+  },
+  etherscan: {
+    // Your API key for Etherscan
+    // Obtain one at https://etherscan.io/
+    apiKey: "IZX9DWVHGC9CEQ2SJHP4AWHX4K2U52WGKH"
   },
   solidity: {
     compilers: [

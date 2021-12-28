@@ -41,17 +41,22 @@ async function main() {
   const RewardPool = await ethers.getContractFactory('RewardPool')
   const rewardPool = await RewardPool.deploy(token.address)
   await rewardPool.deployed()
+  const NFT = await ethers.getContractFactory('FarmFinanceNFT')
+  const nft = await NFT.deploy('0x8e7cbC6C11b1e906dbcA2BfEe2699CDc2ab93624')
+  await nft.deployed()
+  console.log('NFT deployed to:', nft.address)
+
   console.log('RewardPool deployed to:', rewardPool.address)
 
   await token.transfer(reserve.address, ethers.utils.parseUnits("20000000", "ether"))
   await token.transfer(rewardPool.address, ethers.utils.parseUnits("99000000", "ether"))
-  await token.transfer(airdropAddress, ethers.utils.parseUnits("2000000", "ether"))
-  await token.transfer(privateSale, ethers.utils.parseUnits("10000000", "ether"))
-  await token.transfer(preSale, ethers.utils.parseUnits("20000000", "ether"))
-  await token.transfer(marketting, ethers.utils.parseUnits("14000000", "ether"))
-  await token.transfer(liquidity, ethers.utils.parseUnits("5000000", "ether"))
-  await token.transfer(team, ethers.utils.parseUnits("10000000", "ether"))
-  await token.transfer(partner, ethers.utils.parseUnits("20000000", "ether"))
+  // await token.transfer(airdropAddress, ethers.utils.parseUnits("2000000", "ether"))
+  // await token.transfer(privateSale, ethers.utils.parseUnits("10000000", "ether"))
+  // await token.transfer(preSale, ethers.utils.parseUnits("20000000", "ether"))
+  // await token.transfer(marketting, ethers.utils.parseUnits("14000000", "ether"))
+  // await token.transfer(liquidity, ethers.utils.parseUnits("5000000", "ether"))
+  // await token.transfer(team, ethers.utils.parseUnits("10000000", "ether"))
+  // await token.transfer(partner, ethers.utils.parseUnits("20000000", "ether"))
   
 
   contractList = {

@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/home/nhatcl/project/other-project/farmville-smartcontract/contracts/airdrop/airdrop.sol": {
-      "lastModificationDate": 1638951613642,
-      "contentHash": "76da4f463b2c7cf896d5dfc00bcf17e9",
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\contracts\\airdrop\\airdrop.sol": {
+      "lastModificationDate": 1639815261898,
+      "contentHash": "9fa1e826af49959d8855350228e440c0",
       "sourceName": "contracts/airdrop/airdrop.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -39,8 +39,8 @@
         "Airdrop"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1639714261914,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\access\\Ownable.sol": {
+      "lastModificationDate": 1640117388793,
       "contentHash": "cbba874af15bc1c65a1c82aebec1a0fe",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
@@ -76,8 +76,8 @@
         "Ownable"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1639714283950,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
+      "lastModificationDate": 1640117388733,
       "contentHash": "5f4c7678e2e69875dbd2ec01d3d288c1",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
@@ -111,8 +111,8 @@
         "IERC20"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1639714261930,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
+      "lastModificationDate": 1640117388579,
       "contentHash": "a06a83834de6f8eb27f6ed608d030ac2",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
@@ -146,9 +146,9 @@
         "Context"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/contracts/staking/StakingTest.sol": {
-      "lastModificationDate": 1639626941666,
-      "contentHash": "ce2be192f97398e02bd836ba96e368b7",
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\contracts\\staking\\StakingTest.sol": {
+      "lastModificationDate": 1639815261898,
+      "contentHash": "9ba6d719383d11e40c6aecc1f922aa09",
       "sourceName": "contracts/staking/StakingTest.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -187,8 +187,8 @@
         "StakingTest"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol": {
-      "lastModificationDate": 1639714283978,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\utils\\math\\SafeMath.sol": {
+      "lastModificationDate": 1640117388810,
       "contentHash": "dcf128fca99b7d6f0746803711fa3f39",
       "sourceName": "@openzeppelin/contracts/utils/math/SafeMath.sol",
       "solcConfig": {
@@ -222,8 +222,8 @@
         "SafeMath"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol": {
-      "lastModificationDate": 1639714261930,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\security\\ReentrancyGuard.sol": {
+      "lastModificationDate": 1640117388802,
       "contentHash": "402cec08d80c01e96ba8d27963975f8d",
       "sourceName": "@openzeppelin/contracts/security/ReentrancyGuard.sol",
       "solcConfig": {
@@ -257,9 +257,9 @@
         "ReentrancyGuard"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/contracts/staking/ReserveTest.sol": {
-      "lastModificationDate": 1639626941666,
-      "contentHash": "6f6887a7fa63095d2945518ee9fe396f",
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\contracts\\staking\\ReserveTest.sol": {
+      "lastModificationDate": 1639815261898,
+      "contentHash": "caa167d2552c6c0482f2ab1347fad2f0",
       "sourceName": "contracts/staking/ReserveTest.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -295,9 +295,9 @@
         "ReserveTest"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/contracts/staking-with-apr/Staking.sol": {
-      "lastModificationDate": 1639726163129,
-      "contentHash": "4ab2b2dec70e4cfa0342a986586dda9c",
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\contracts\\staking-with-apr\\Staking.sol": {
+      "lastModificationDate": 1639815261898,
+      "contentHash": "8b2600ef565172914b71114f87c0a890",
       "sourceName": "contracts/staking-with-apr/Staking.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -336,9 +336,9 @@
         "Staking"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/contracts/staking-with-apr/Reserve.sol": {
-      "lastModificationDate": 1639626941666,
-      "contentHash": "4e153aea5b4232910c0aed90162dca76",
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\contracts\\staking-with-apr\\Reserve.sol": {
+      "lastModificationDate": 1639815261898,
+      "contentHash": "83141e71b7e9f4efd08142f7a14d1d1a",
       "sourceName": "contracts/staking-with-apr/Reserve.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -374,9 +374,9 @@
         "Reserve"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/contracts/reward/RewardPool.sol": {
-      "lastModificationDate": 1639626941666,
-      "contentHash": "b77e18e23f6af26e515b5cbfd455e89b",
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\contracts\\reward\\RewardPool.sol": {
+      "lastModificationDate": 1639815261898,
+      "contentHash": "e554783d16ba48c01fe93668fe721154",
       "sourceName": "contracts/reward/RewardPool.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -417,8 +417,8 @@
         "RewardPool"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/utils/Counters.sol": {
-      "lastModificationDate": 1639714261930,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\utils\\Counters.sol": {
+      "lastModificationDate": 1640117388582,
       "contentHash": "a21834c04c11733a9018196d6b1b0e89",
       "sourceName": "@openzeppelin/contracts/utils/Counters.sol",
       "solcConfig": {
@@ -452,8 +452,8 @@
         "Counters"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/security/Pausable.sol": {
-      "lastModificationDate": 1639714261930,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\security\\Pausable.sol": {
+      "lastModificationDate": 1640117388794,
       "contentHash": "328e35c94e8585475f9e5df92fbbb7a2",
       "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
       "solcConfig": {
@@ -489,8 +489,8 @@
         "Pausable"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/access/AccessControl.sol": {
-      "lastModificationDate": 1639714261878,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\access\\AccessControl.sol": {
+      "lastModificationDate": 1640117388558,
       "contentHash": "7566c6c5c9ef0ebe07a660f6633c95d9",
       "sourceName": "@openzeppelin/contracts/access/AccessControl.sol",
       "solcConfig": {
@@ -529,8 +529,8 @@
         "AccessControl"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/access/IAccessControl.sol": {
-      "lastModificationDate": 1639714261890,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\access\\IAccessControl.sol": {
+      "lastModificationDate": 1640117388693,
       "contentHash": "4b41bf9357608ab58d8f48c51c33c6ab",
       "sourceName": "@openzeppelin/contracts/access/IAccessControl.sol",
       "solcConfig": {
@@ -564,8 +564,8 @@
         "IAccessControl"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
-      "lastModificationDate": 1639714261930,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\utils\\Strings.sol": {
+      "lastModificationDate": 1640117388816,
       "contentHash": "babfde9e032d8044f461325c13ca07d7",
       "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
       "solcConfig": {
@@ -599,8 +599,8 @@
         "Strings"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
-      "lastModificationDate": 1639714283958,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\utils\\introspection\\ERC165.sol": {
+      "lastModificationDate": 1640117388617,
       "contentHash": "31c485b4e552cc1bdeb99edb8303011e",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
@@ -636,8 +636,8 @@
         "ERC165"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
-      "lastModificationDate": 1639714283974,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\utils\\introspection\\IERC165.sol": {
+      "lastModificationDate": 1640117388723,
       "contentHash": "caf880149ceb95d7355b976d61c278a8",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
@@ -671,538 +671,8 @@
         "IERC165"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/access/AccessControlEnumerable.sol": {
-      "lastModificationDate": 1639714261890,
-      "contentHash": "0397d3cb7b559b160956b28275364bd6",
-      "sourceName": "@openzeppelin/contracts/access/AccessControlEnumerable.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IAccessControlEnumerable.sol",
-        "./AccessControl.sol",
-        "../utils/structs/EnumerableSet.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "AccessControlEnumerable"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/access/IAccessControlEnumerable.sol": {
-      "lastModificationDate": 1639714261910,
-      "contentHash": "6a81f859519b45f65feb127e5e36199c",
-      "sourceName": "@openzeppelin/contracts/access/IAccessControlEnumerable.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IAccessControl.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IAccessControlEnumerable"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/utils/structs/EnumerableSet.sol": {
-      "lastModificationDate": 1639714284142,
-      "contentHash": "d340fc058c1720b449e473737d8aa388",
-      "sourceName": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "EnumerableSet"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol": {
-      "lastModificationDate": 1639714294783,
-      "contentHash": "f10e60c7febcfa8de84eef4bba322a05",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../ERC1155.sol",
-        "../extensions/ERC1155Burnable.sol",
-        "../extensions/ERC1155Pausable.sol",
-        "../../../access/AccessControlEnumerable.sol",
-        "../../../utils/Context.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC1155PresetMinterPauser"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol": {
-      "lastModificationDate": 1639714283950,
-      "contentHash": "a5cd7870d859c3260e4fe00dd3ece2c0",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC1155.sol",
-        "./IERC1155Receiver.sol",
-        "./extensions/IERC1155MetadataURI.sol",
-        "../../utils/Address.sol",
-        "../../utils/Context.sol",
-        "../../utils/introspection/ERC165.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC1155"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol": {
-      "lastModificationDate": 1639714294779,
-      "contentHash": "d075f499c67eb16cb7cef6d7f8c1b0a0",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../ERC1155.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC1155Burnable"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol": {
-      "lastModificationDate": 1639714294783,
-      "contentHash": "efaa9deb57a4f4d9f9c7bdf258fc8796",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../ERC1155.sol",
-        "../../../security/Pausable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC1155Pausable"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol": {
-      "lastModificationDate": 1639714283930,
-      "contentHash": "0e2e19e1b1e3925e33887978e509f6ad",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../utils/introspection/IERC165.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC1155"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol": {
-      "lastModificationDate": 1639714283946,
-      "contentHash": "267ac43ce2f4a88182f279f80102d0d6",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../utils/introspection/IERC165.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC1155Receiver"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol": {
-      "lastModificationDate": 1639714294783,
-      "contentHash": "9063e5a2e62d141a2728ae0cc2d44f0b",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../IERC1155.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC1155MetadataURI"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/utils/Address.sol": {
-      "lastModificationDate": 1639714261930,
-      "contentHash": "a8d6f1154bf88980c18dd20fb009967d",
-      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Address"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/contracts/BEP20/FFT.sol": {
-      "lastModificationDate": 1639626941666,
-      "contentHash": "934997e22491315204363dbc23fdbb56",
-      "sourceName": "contracts/BEP20/FFT.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        "@openzeppelin/contracts/security/Pausable.sol",
-        "@openzeppelin/contracts/access/AccessControl.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.4"
-      ],
-      "artifacts": [
-        "FarmFinance"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
-      "lastModificationDate": 1639714283946,
-      "contentHash": "301fed494a57e27be4323bdff2d054bf",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC20.sol",
-        "./extensions/IERC20Metadata.sol",
-        "../../utils/Context.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC20"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
-      "lastModificationDate": 1639714294787,
-      "contentHash": "5e82817b39b46b54032effefa77b2bd9",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../IERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC20Metadata"
-      ]
-    },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol": {
-      "lastModificationDate": 1639714283954,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\token\\ERC721\\ERC721.sol": {
+      "lastModificationDate": 1640117388657,
       "contentHash": "81722bd5f5980edd45a9a72c4119225a",
       "sourceName": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
       "solcConfig": {
@@ -1244,8 +714,8 @@
         "ERC721"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
-      "lastModificationDate": 1639714283954,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\token\\ERC721\\IERC721.sol": {
+      "lastModificationDate": 1640117388751,
       "contentHash": "937105c04c9b4b689f8ee2d6d161994d",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
       "solcConfig": {
@@ -1281,8 +751,8 @@
         "IERC721"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
-      "lastModificationDate": 1639714283954,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\token\\ERC721\\IERC721Receiver.sol": {
+      "lastModificationDate": 1640117388764,
       "contentHash": "c327b62ee5bcacfdd977bc3888fba3a4",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
       "solcConfig": {
@@ -1316,8 +786,8 @@
         "IERC721Receiver"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
-      "lastModificationDate": 1639714294795,
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\token\\ERC721\\extensions\\IERC721Metadata.sol": {
+      "lastModificationDate": 1640117388761,
       "contentHash": "a17d56fe0dfcceb68cd8a527b934b0ae",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
       "solcConfig": {
@@ -1353,9 +823,159 @@
         "IERC721Metadata"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/contracts/interface/INFT.sol": {
-      "lastModificationDate": 1638522703245,
-      "contentHash": "2f7b57893d107fdca5728fd984240a3f",
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\utils\\Address.sol": {
+      "lastModificationDate": 1640117388561,
+      "contentHash": "a8d6f1154bf88980c18dd20fb009967d",
+      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Address"
+      ]
+    },
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\contracts\\BEP20\\FFT.sol": {
+      "lastModificationDate": 1639815261898,
+      "contentHash": "ed1d5366210912788b733b6e769be44c",
+      "sourceName": "contracts/BEP20/FFT.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/security/Pausable.sol",
+        "@openzeppelin/contracts/access/AccessControl.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.4"
+      ],
+      "artifacts": [
+        "FarmFinance"
+      ]
+    },
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol": {
+      "lastModificationDate": 1640117388635,
+      "contentHash": "301fed494a57e27be4323bdff2d054bf",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol",
+        "./extensions/IERC20Metadata.sol",
+        "../../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC20"
+      ]
+    },
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol": {
+      "lastModificationDate": 1640117388739,
+      "contentHash": "5e82817b39b46b54032effefa77b2bd9",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20Metadata"
+      ]
+    },
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\contracts\\interface\\INFT.sol": {
+      "lastModificationDate": 1639815261898,
+      "contentHash": "08e89ef77b4ef497decb0ceb859322f2",
       "sourceName": "contracts/interface/INFT.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -1390,9 +1010,9 @@
         "INFT"
       ]
     },
-    "/home/nhatcl/project/other-project/farmville-smartcontract/contracts/nft/FarmFinanceNFT.sol": {
-      "lastModificationDate": 1639714152322,
-      "contentHash": "889120501624af0282038065c8213f9f",
+    "C:\\Users\\Admin\\Coding\\farmville\\farmville-smartcontract\\contracts\\nft\\FarmFinanceNFT.sol": {
+      "lastModificationDate": 1640117277547,
+      "contentHash": "a89b23c0a49096e4df1d3817f16b64d9",
       "sourceName": "contracts/nft/FarmFinanceNFT.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -1420,13 +1040,16 @@
       "imports": [
         "@openzeppelin/contracts/access/Ownable.sol",
         "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        "@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol",
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/security/ReentrancyGuard.sol"
       ],
       "versionPragmas": [
         "^0.8.4"
       ],
-      "artifacts": []
+      "artifacts": [
+        "FarmFinanceNFT"
+      ]
     }
   }
 }

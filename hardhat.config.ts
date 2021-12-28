@@ -32,9 +32,10 @@ const config: HardhatUserConfig = {
       url: "https://data-seed-prebsc-1-s1.binance.org:8545",
       chainId: 97,
       gasPrice: 20000000000,
-      accounts: ["fcd59a4b02702b7f608b49a436ebb2f743fdaad8d9b3255bd1a3423422a5eed9"]
+      accounts: ["b99cb646729956f9088a816a9dd09c0fc5ea11acf883228de11fc95fa2ac7d14"]
     },
    
+ 
   },
   etherscan: {
     // Your API key for Etherscan

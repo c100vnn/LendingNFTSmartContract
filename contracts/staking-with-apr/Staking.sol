@@ -197,7 +197,10 @@ contract Staking is Ownable, ReentrancyGuard {
         returns (uint256)
     {
         require(stakePackages[_packageId].rate > 0, 'Invalid package ID');
-        require(block.timestamp !=stakes[msg.sender][_packageId].timePoint, 'Invalid stake');
+        require(
+            block.timestamp != stakes[msg.sender][_packageId].timePoint,
+            'Invalid stake'
+        );
         uint256 profit = (
             block
                 .timestamp
@@ -206,5 +209,18 @@ contract Staking is Ownable, ReentrancyGuard {
                 .mul(stakePackages[_packageId].rate)
         ).mul(stakes[msg.sender][_packageId].amount).div(100000);
         return stakes[msg.sender][_packageId].totalProfit.add(profit);
+    }
+
+    function getStakeInfo(uint256 _packageId)
+        public
+        view
+        returns (uint256, uint256)
+    {
+        require(stakePackages[_packageId].rate > 0, 'Invalid package ID');
+        require(
+            block.timestamp != stakes[msg.sender][_packageId].timePoint,
+            'Invalid stake'
+        );
+        return (stakes[msg.sender][_packageId].amount, stakes[msg.sender][_packageId].startTime);
     }
 }

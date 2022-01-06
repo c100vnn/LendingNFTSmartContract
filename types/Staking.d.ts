@@ -25,6 +25,7 @@ interface StakingInterface extends ethers.utils.Interface {
     "calculateMyProfit(uint256)": FunctionFragment;
     "decimals()": FunctionFragment;
     "getAprOfPackage(uint256)": FunctionFragment;
+    "getStakeInfo(uint256)": FunctionFragment;
     "getStakePackages()": FunctionFragment;
     "mainToken()": FunctionFragment;
     "owner()": FunctionFragment;
@@ -52,6 +53,10 @@ interface StakingInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "getAprOfPackage",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getStakeInfo",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -110,6 +115,10 @@ interface StakingInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getAprOfPackage",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getStakeInfo",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -264,6 +273,16 @@ export class Staking extends BaseContract {
       _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
+
+    getStakeInfo(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber]>;
+
+    "getStakeInfo(uint256)"(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber]>;
 
     getStakePackages(
       overrides?: CallOverrides
@@ -474,6 +493,16 @@ export class Staking extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  getStakeInfo(
+    _packageId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, BigNumber]>;
+
+  "getStakeInfo(uint256)"(
+    _packageId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, BigNumber]>;
+
   getStakePackages(
     overrides?: CallOverrides
   ): Promise<
@@ -678,6 +707,16 @@ export class Staking extends BaseContract {
       _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    getStakeInfo(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber]>;
+
+    "getStakeInfo(uint256)"(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber]>;
 
     getStakePackages(
       overrides?: CallOverrides
@@ -964,6 +1003,16 @@ export class Staking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getStakeInfo(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getStakeInfo(uint256)"(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getStakePackages(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getStakePackages()"(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1124,6 +1173,16 @@ export class Staking extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     "getAprOfPackage(uint256)"(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getStakeInfo(
+      _packageId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "getStakeInfo(uint256)"(
       _packageId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;

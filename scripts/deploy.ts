@@ -42,7 +42,7 @@ async function main() {
   const rewardPool = await RewardPool.deploy(token.address)
   await rewardPool.deployed()
   const NFT = await ethers.getContractFactory('FarmFinanceNFT')
-  const nft = await NFT.deploy('0x8e7cbC6C11b1e906dbcA2BfEe2699CDc2ab93624')
+  const nft = await NFT.deploy(token.address)
   await nft.deployed()
   console.log('NFT deployed to:', nft.address)
 

@@ -1,18 +1,18 @@
 {
   "token": {
     "name": "Token",
-    "address": "0x4bcD459D6Cae6774e8e0f6DF75fc2757D4FD57a6"
+    "address": "0xBd5C6C76662140378230B8c3B0D7C7f83D3eE752"
   },
   "reserve": {
     "name": "Reserve",
-    "address": "0x30054357Fa42DC480a30d5DD2e76C9DE8a5A6aF7"
+    "address": "0x613d77d06E62a2C24bBc44A57198c79504E2dF79"
   },
   "staking": {
     "name": "Staking",
-    "address": "0x8E51fbD3699421C4bb4DFE2cF53F2194FC28e354"
+    "address": "0x370c6a0dfB927e30b1c753434a98A7D6635a88B9"
   },
   "rewardPool": {
     "name": "RewardPool",
-    "address": "0xfa4403A0A410400af614070baBFE7597ab6717f2"
+    "address": "0x88F258C486e411e996fB7bf27F2a12Bc6023C791"
   }
 }

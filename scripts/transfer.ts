@@ -25,28 +25,7 @@ async function main() {
 
   // const Token = await ethers.getContractFactory('FarmFinance')
   const token = await ethers.getContractAt("FarmFinance", FFTADDRESS);
-  // const token = await Token.deploy()
-  // await token.deployed()
-  // console.log('farmFinance deployed to:', token.address)
 
-  const Staking = await ethers.getContractFactory('Staking')
-  const staking = await Staking.deploy(FFTADDRESS)
-  await staking.deployed()
-  console.log('staking contract deployed to:', staking.address)
-  //reserve for staing
-  const Reserve = await ethers.getContractFactory('Reserve')
-  const reserve = await Reserve.deploy(FFTADDRESS, staking.address)
-  await reserve.deployed()
-  console.log('reserve deployed to:', reserve.address)
-  await staking.setReserve(reserve.address)
-
-  const RewardPool = await ethers.getContractFactory('RewardPool')
-  const rewardPool = await RewardPool.deploy(FFTADDRESS)
-  await rewardPool.deployed()
-  console.log('RewardPool deployed to:', rewardPool.address)
-
-  await token.transfer(reserve.address, ethers.utils.parseUnits("20000000", "ether"))
-  await token.transfer(rewardPool.address, ethers.utils.parseUnits("99000000", "ether"))
   await token.transfer(airdropAddress, ethers.utils.parseUnits("2000000", "ether"))
   await token.transfer(privateSale, ethers.utils.parseUnits("10000000", "ether"))
   await token.transfer(preSale, ethers.utils.parseUnits("20000000", "ether"))

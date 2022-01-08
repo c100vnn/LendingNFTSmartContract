@@ -28,8 +28,8 @@ async function main() {
   const reserve = await Reserve.deploy(FFTADDRESS, staking.address)
   await reserve.deployed()
   console.log('reserve deployed to:', reserve.address)
-  await staking.setReserve(reserve.address)
-
+  const setReserveTx = await staking.setReserve(reserve.address)
+  await setReserveTx.wait()
   console.log('set reserve completed:')
 
   const transferTx = await token.transfer(reserve.address, ethers.utils.parseUnits("20000000", "ether"))

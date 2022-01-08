@@ -46,7 +46,7 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
         bool isCanceled;
     }
     //use itemIdToMarketItem[itemId] to get Item
-    mapping(uint256 => MarketItem) private idToMarketItem;
+    mapping(uint256 => MarketItem) public idToMarketItem;
 
     constructor(address _tokenBaseAddress) ERC721('Farm Finance NFT', 'FFN') {
         tokenBaseAddress = _tokenBaseAddress;
@@ -71,7 +71,7 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
 
     /**
      * Open seed box is function for create a new token
-     * @param level: we have 3 levels: 0,1
+     * @param level: we have 2 levels: 0,1
      */
     function openSeedBox(uint8 level) public nonReentrant {
         require(level < priceLevels.length);
@@ -179,5 +179,10 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
             idToMarketItem[_itemId].seller,
             block.timestamp
         );
+    }
+    function withdrawToken() public onlyOwner {
+        uint256 amount = IERC20(tokenBaseAddress).balanceOf(address(this));
+        require(IERC20(tokenBaseAddress).balanceOf(address(this)) > 0, "contract out of token");
+        IERC20(tokenBaseAddress).transfer(msg.sender, amount);
     }
 }

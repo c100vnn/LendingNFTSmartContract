@@ -28,6 +28,7 @@ interface FarmFinanceNFTInterface extends ethers.utils.Interface {
     "createMarketItem(uint256,uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "getGachaPrice()": FunctionFragment;
+    "idToMarketItem(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "name()": FunctionFragment;
     "openSeedBox(uint8)": FunctionFragment;
@@ -42,6 +43,7 @@ interface FarmFinanceNFTInterface extends ethers.utils.Interface {
     "tokenURI(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
+    "withdrawToken()": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -68,6 +70,10 @@ interface FarmFinanceNFTInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "getGachaPrice",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "idToMarketItem",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
@@ -116,6 +122,10 @@ interface FarmFinanceNFTInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawToken",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -137,6 +147,10 @@ interface FarmFinanceNFTInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getGachaPrice",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "idToMarketItem",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -178,6 +192,10 @@ interface FarmFinanceNFTInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawToken",
     data: BytesLike
   ): Result;
 
@@ -374,6 +392,36 @@ export class FarmFinanceNFT extends BaseContract {
 
     "getGachaPrice()"(overrides?: CallOverrides): Promise<[BigNumber[]]>;
 
+    idToMarketItem(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, string, string, BigNumber, boolean, boolean] & {
+        itemId: BigNumber;
+        tokenId: BigNumber;
+        seller: string;
+        buyer: string;
+        price: BigNumber;
+        sold: boolean;
+        isCanceled: boolean;
+      }
+    >;
+
+    "idToMarketItem(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, string, string, BigNumber, boolean, boolean] & {
+        itemId: BigNumber;
+        tokenId: BigNumber;
+        seller: string;
+        buyer: string;
+        price: BigNumber;
+        sold: boolean;
+        isCanceled: boolean;
+      }
+    >;
+
     isApprovedForAll(
       owner: string,
       operator: string,
@@ -508,6 +556,14 @@ export class FarmFinanceNFT extends BaseContract {
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    withdrawToken(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "withdrawToken()"(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
 
   approve(
@@ -574,6 +630,36 @@ export class FarmFinanceNFT extends BaseContract {
   getGachaPrice(overrides?: CallOverrides): Promise<BigNumber[]>;
 
   "getGachaPrice()"(overrides?: CallOverrides): Promise<BigNumber[]>;
+
+  idToMarketItem(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber, string, string, BigNumber, boolean, boolean] & {
+      itemId: BigNumber;
+      tokenId: BigNumber;
+      seller: string;
+      buyer: string;
+      price: BigNumber;
+      sold: boolean;
+      isCanceled: boolean;
+    }
+  >;
+
+  "idToMarketItem(uint256)"(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber, string, string, BigNumber, boolean, boolean] & {
+      itemId: BigNumber;
+      tokenId: BigNumber;
+      seller: string;
+      buyer: string;
+      price: BigNumber;
+      sold: boolean;
+      isCanceled: boolean;
+    }
+  >;
 
   isApprovedForAll(
     owner: string,
@@ -704,6 +790,14 @@ export class FarmFinanceNFT extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  withdrawToken(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "withdrawToken()"(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     approve(
       to: string,
@@ -769,6 +863,36 @@ export class FarmFinanceNFT extends BaseContract {
     getGachaPrice(overrides?: CallOverrides): Promise<BigNumber[]>;
 
     "getGachaPrice()"(overrides?: CallOverrides): Promise<BigNumber[]>;
+
+    idToMarketItem(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, string, string, BigNumber, boolean, boolean] & {
+        itemId: BigNumber;
+        tokenId: BigNumber;
+        seller: string;
+        buyer: string;
+        price: BigNumber;
+        sold: boolean;
+        isCanceled: boolean;
+      }
+    >;
+
+    "idToMarketItem(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, string, string, BigNumber, boolean, boolean] & {
+        itemId: BigNumber;
+        tokenId: BigNumber;
+        seller: string;
+        buyer: string;
+        price: BigNumber;
+        sold: boolean;
+        isCanceled: boolean;
+      }
+    >;
 
     isApprovedForAll(
       owner: string,
@@ -891,6 +1015,10 @@ export class FarmFinanceNFT extends BaseContract {
       newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    withdrawToken(overrides?: CallOverrides): Promise<void>;
+
+    "withdrawToken()"(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -1155,6 +1283,16 @@ export class FarmFinanceNFT extends BaseContract {
 
     "getGachaPrice()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    idToMarketItem(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "idToMarketItem(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isApprovedForAll(
       owner: string,
       operator: string,
@@ -1289,6 +1427,14 @@ export class FarmFinanceNFT extends BaseContract {
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    withdrawToken(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "withdrawToken()"(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1359,6 +1505,16 @@ export class FarmFinanceNFT extends BaseContract {
     getGachaPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "getGachaPrice()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    idToMarketItem(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "idToMarketItem(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
@@ -1492,6 +1648,14 @@ export class FarmFinanceNFT extends BaseContract {
 
     "transferOwnership(address)"(
       newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdrawToken(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "withdrawToken()"(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

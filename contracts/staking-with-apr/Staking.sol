@@ -53,7 +53,7 @@ contract Staking is Ownable, ReentrancyGuard {
         // add free-time staking package
         StakePackage memory pk;
         pk.rate = 137;
-        pk.minStaking = 500 * 10**decimals();
+        pk.minStaking = 100 * 10**decimals();
         pk.lockDays = 5;
         stakePackages.push(pk);
     }

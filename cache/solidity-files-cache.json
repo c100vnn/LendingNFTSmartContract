@@ -296,8 +296,8 @@
       ]
     },
     "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\staking-with-apr\\Staking.sol": {
-      "lastModificationDate": 1641540921525,
-      "contentHash": "6f8a48f3b5e391a9fac0aae22c31471d",
+      "lastModificationDate": 1641653427269,
+      "contentHash": "6c4817080b24c88c10f315b0da75662f",
       "sourceName": "contracts/staking-with-apr/Staking.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -1011,8 +1011,8 @@
       ]
     },
     "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\nft\\FarmFinanceNFT.sol": {
-      "lastModificationDate": 1641648455534,
-      "contentHash": "156bac4411e0a08186dde0b3962cafa0",
+      "lastModificationDate": 1641832897088,
+      "contentHash": "61bbdc86a8d0e42b424b370b62430ed5",
       "sourceName": "contracts/nft/FarmFinanceNFT.sol",
       "solcConfig": {
         "version": "0.8.4",

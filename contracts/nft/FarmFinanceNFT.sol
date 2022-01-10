@@ -12,7 +12,7 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
     Counters.Counter private _itemIds;
     address tokenBaseAddress;
     uint256[] priceLevels = [1000000000000000000000, 3000000000000000000000];
-    event SeedBoxOpened(uint256 tokenId, address owner, uint256 timestamp);
+    event SeedBoxOpened(uint256 tokenId, address owner, uint256 timestamp, uint256 level);
     event MarketItemCreated(
         uint256 itemId,
         uint256 tokenId,
@@ -84,7 +84,7 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
         uint256 tokenId = _tokenIds.current();
         _mint(msg.sender, tokenId);
         _tokenIds.increment();
-        emit SeedBoxOpened(tokenId, msg.sender, block.timestamp);
+        emit SeedBoxOpened(tokenId, msg.sender, block.timestamp, level);
     }
 
     /**
@@ -98,7 +98,7 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
     {
         require(_price > 0);
         //need to approve first
-        transferFrom(msg.sender, address(this), _tokenId);
+        _transfer(msg.sender, address(this), _tokenId);
         uint256 itemId = _itemIds.current();
         idToMarketItem[itemId] = MarketItem(
             itemId,
@@ -137,11 +137,12 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
             idToMarketItem[_itemId].seller,
             idToMarketItem[_itemId].price
         );
-        transferFrom(
-            address(this),
-            msg.sender,
-            idToMarketItem[_itemId].tokenId
-        );
+        _transfer(address(this), msg.sender, idToMarketItem[_itemId].tokenId);
+        // transferFrom(
+        //     address(this),
+        //     msg.sender,
+        //     idToMarketItem[_itemId].tokenId
+        // );
         emit MarketItemBought(
             _itemId,
             idToMarketItem[_itemId].tokenId,
@@ -166,11 +167,14 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
             idToMarketItem[_itemId].buyer == address(0),
             'item has been sold'
         );
-        transferFrom(
-            address(this),
+        _transfer( address(this),
             msg.sender,
-            idToMarketItem[_itemId].tokenId
-        );
+            idToMarketItem[_itemId].tokenId);
+        // transferFrom(
+        //     address(this),
+        //     msg.sender,
+        //     idToMarketItem[_itemId].tokenId
+        // );
         idToMarketItem[_itemId].isCanceled = true;
         emit MarketItemCanceled(
             _itemId,

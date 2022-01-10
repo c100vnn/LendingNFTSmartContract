@@ -206,7 +206,7 @@ interface FarmFinanceNFTInterface extends ethers.utils.Interface {
     "MarketItemCanceled(uint256,uint256,uint256,address,uint256)": EventFragment;
     "MarketItemCreated(uint256,uint256,uint256,address,uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
-    "SeedBoxOpened(uint256,address,uint256)": EventFragment;
+    "SeedBoxOpened(uint256,address,uint256,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
@@ -272,10 +272,11 @@ export type OwnershipTransferredEvent = TypedEvent<
 >;
 
 export type SeedBoxOpenedEvent = TypedEvent<
-  [BigNumber, string, BigNumber] & {
+  [BigNumber, string, BigNumber, BigNumber] & {
     tokenId: BigNumber;
     owner: string;
     timestamp: BigNumber;
+    level: BigNumber;
   }
 >;
 
@@ -1180,22 +1181,34 @@ export class FarmFinanceNFT extends BaseContract {
       { previousOwner: string; newOwner: string }
     >;
 
-    "SeedBoxOpened(uint256,address,uint256)"(
+    "SeedBoxOpened(uint256,address,uint256,uint256)"(
       tokenId?: null,
       owner?: null,
-      timestamp?: null
+      timestamp?: null,
+      level?: null
     ): TypedEventFilter<
-      [BigNumber, string, BigNumber],
-      { tokenId: BigNumber; owner: string; timestamp: BigNumber }
+      [BigNumber, string, BigNumber, BigNumber],
+      {
+        tokenId: BigNumber;
+        owner: string;
+        timestamp: BigNumber;
+        level: BigNumber;
+      }
     >;
 
     SeedBoxOpened(
       tokenId?: null,
       owner?: null,
-      timestamp?: null
+      timestamp?: null,
+      level?: null
     ): TypedEventFilter<
-      [BigNumber, string, BigNumber],
-      { tokenId: BigNumber; owner: string; timestamp: BigNumber }
+      [BigNumber, string, BigNumber, BigNumber],
+      {
+        tokenId: BigNumber;
+        owner: string;
+        timestamp: BigNumber;
+        level: BigNumber;
+      }
     >;
 
     "Transfer(address,address,uint256)"(

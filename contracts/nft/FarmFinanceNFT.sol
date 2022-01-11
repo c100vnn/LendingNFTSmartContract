@@ -128,7 +128,7 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
             msg.sender != idToMarketItem[_itemId].seller,
             'asker must not be owner'
         );
-        require(idToMarketItem[_itemId].sold == false, 'item has been sold');
+        require(!idToMarketItem[_itemId].sold, 'item has been sold');
         require(!idToMarketItem[_itemId].isCanceled, 'Item has been cancelled');
         idToMarketItem[_itemId].buyer = msg.sender;
         idToMarketItem[_itemId].sold = true;

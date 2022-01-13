@@ -5,14 +5,28 @@ import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts/utils/Counters.sol';
 import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
+import '@openzeppelin/contracts/utils/cryptography/ECDSA.sol';
+import '@openzeppelin/contracts/access/AccessControl.sol';
 
-contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
+contract FarmFinanceNFT is AccessControl, ERC721, ReentrancyGuard {
+    using ECDSA for bytes32;
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     Counters.Counter private _itemIds;
     address tokenBaseAddress;
+    bytes32 public constant MINTER_ROLE = keccak256('MINTER_ROLE');
     uint256[] priceLevels = [1000000000000000000000, 3000000000000000000000];
-    event SeedBoxOpened(uint256 tokenId, address owner, uint256 timestamp, uint256 level);
+    event SeedBoxOpened(
+        uint256 tokenId,
+        address owner,
+        uint256 timestamp,
+        uint256 level
+    );
+    event SeedBoxOpenedWithSignature(
+        uint256 tokenId,
+        address owner,
+        uint256 timestamp
+    );
     event MarketItemCreated(
         uint256 itemId,
         uint256 tokenId,
@@ -47,9 +61,63 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
     }
     //use itemIdToMarketItem[itemId] to get Item
     mapping(uint256 => MarketItem) public idToMarketItem;
+    mapping(address => bool) public approvalWhitelists;
 
     constructor(address _tokenBaseAddress) ERC721('Farm Finance NFT', 'FFN') {
         tokenBaseAddress = _tokenBaseAddress;
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(MINTER_ROLE, msg.sender);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC721, AccessControl)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
+    }
+
+    /**
+     * @dev See {IERC721-isApprovedForAll}.
+     */
+    function isApprovedForAll(address owner, address operator)
+        public
+        view
+        override
+        returns (bool)
+    {
+        if (approvalWhitelists[operator] == true) {
+            return true;
+        }
+
+        return super.isApprovedForAll(owner, operator);
+    }
+
+    /**
+     * @dev Allow operation to reduce gas fee.
+     */
+    function addApprovalWhitelist(address proxy)
+        public
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        require(
+            approvalWhitelists[proxy] == false,
+            'GameNFT: invalid proxy address'
+        );
+
+        approvalWhitelists[proxy] = true;
+    }
+
+    /**
+     * @dev Remove operation from approval list.
+     */
+    function removeApprovalWhitelist(address proxy)
+        public
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        approvalWhitelists[proxy] = false;
     }
 
     /**
@@ -64,7 +132,10 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
      * @param level: we have 3 levels: 0,1,2
      * @param price: price want to set
      */
-    function setGachaPrice(uint8 level, uint256 price) public onlyOwner {
+    function setGachaPrice(uint8 level, uint256 price)
+        public
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
         require(level < priceLevels.length, 'level invalid');
         priceLevels[level] = price;
     }
@@ -75,6 +146,7 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
      */
     function openSeedBox(uint8 level) public nonReentrant {
         require(level < priceLevels.length);
+        require(level >= 0);
         //need to approve first
         IERC20(tokenBaseAddress).transferFrom(
             msg.sender,
@@ -85,6 +157,28 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
         _mint(msg.sender, tokenId);
         _tokenIds.increment();
         emit SeedBoxOpened(tokenId, msg.sender, block.timestamp, level);
+    }
+
+    function openSeedBoxWithSignature(
+        address requestAccount,
+        bytes memory _hash,
+        bytes memory signature
+    ) public onlyRole(MINTER_ROLE) {
+        require(requestAccount != address(0));
+
+        bytes32 ethSignedMessageHash = ECDSA.toEthSignedMessageHash(_hash);
+
+        if (ECDSA.recover(ethSignedMessageHash, signature) != requestAccount) {
+            revert('Signature does not match message sender');
+        }
+        uint256 tokenId = _tokenIds.current();
+        _mint(requestAccount, tokenId);
+        _tokenIds.increment();
+        emit SeedBoxOpenedWithSignature(
+            tokenId,
+            requestAccount,
+            block.timestamp
+        );
     }
 
     /**
@@ -167,9 +261,7 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
             idToMarketItem[_itemId].buyer == address(0),
             'item has been sold'
         );
-        _transfer( address(this),
-            msg.sender,
-            idToMarketItem[_itemId].tokenId);
+        _transfer(address(this), msg.sender, idToMarketItem[_itemId].tokenId);
         // transferFrom(
         //     address(this),
         //     msg.sender,
@@ -184,9 +276,13 @@ contract FarmFinanceNFT is Ownable, ERC721, ReentrancyGuard {
             block.timestamp
         );
     }
-    function withdrawToken() public onlyOwner {
+
+    function withdrawToken() public onlyRole(DEFAULT_ADMIN_ROLE) {
         uint256 amount = IERC20(tokenBaseAddress).balanceOf(address(this));
-        require(IERC20(tokenBaseAddress).balanceOf(address(this)) > 0, "contract out of token");
+        require(
+            IERC20(tokenBaseAddress).balanceOf(address(this)) > 0,
+            'contract out of token'
+        );
         IERC20(tokenBaseAddress).transfer(msg.sender, amount);
     }
 }

@@ -45,8 +45,12 @@ async function main() {
   const nft = await NFT.deploy(token.address)
   await nft.deployed()
   console.log('NFT deployed to:', nft.address)
-
   console.log('RewardPool deployed to:', rewardPool.address)
+ 
+  const Deposit = await ethers.getContractFactory('Deposit')
+  const deposit = await Deposit.deploy(token.address, rewardPool.address )
+  await deposit.deployed()
+  console.log('Deposit deployed to:', deposit.address)
 
   await token.transfer(reserve.address, ethers.utils.parseUnits("20000000", "ether"))
   await token.transfer(rewardPool.address, ethers.utils.parseUnits("99000000", "ether"))
@@ -75,7 +79,7 @@ async function main() {
     rewardPool: {
       name: 'RewardPool',
       address: rewardPool.address
-    },
+    }
   }
 
   writeFileSync(CONTRACT_PATH, JSON.stringify(contractList, null, 2))

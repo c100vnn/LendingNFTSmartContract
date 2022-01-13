@@ -4,10 +4,11 @@ import { FarmFinanceNFT, FarmFinance } from 'types'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import Web3 from 'web3';
 import { BigNumber } from 'ethers';
+import EthCrypto  from 'eth-crypto';
 const web3 = new Web3('ws://localhost:8546');
 describe('NFT contract', function () {
 
-    let [owner, accountA, accountB]: SignerWithAddress[] = []
+    let [owner, accountA, accountB, accountC]: SignerWithAddress[] = []
     let nft: FarmFinanceNFT
     let token: FarmFinance
     let nftAddress: string
@@ -19,7 +20,7 @@ describe('NFT contract', function () {
     let totalBalance: BigNumber = ethers.utils.parseUnits('200000000', "ether")
     let sellAmount: BigNumber = ethers.utils.parseUnits('100', "ether")
     beforeEach(async () => {
-        [owner, accountA, accountB] = await ethers.getSigners()
+        [owner, accountA, accountB, accountC] = await ethers.getSigners()
         const Token = await ethers.getContractFactory('FarmFinance')
         token = await Token.deploy()
         await token.deployed()
@@ -58,6 +59,37 @@ describe('NFT contract', function () {
             expect(await token.balanceOf(owner.address)).to.be.equal(totalBalance.sub(level1Price).sub(level2Price))
             expect(await token.balanceOf(nftAddress)).to.be.equal(level1Price.add(level2Price))
             expect(await nft.ownerOf(1)).to.be.equal(owner.address)
+        })
+    })
+    describe('#openSeedBoxWithSignature', () => {
+        // beforeEach(async () => {
+        //     await token.transfer(reserveAddress, reserveAmount)
+        // })
+        it("should revert if role not true", async function () {
+            let message = "0" + "-" + accountB.address  
+            let hash =  ethers.utils.solidityKeccak256(['string'], [message]);
+            let signature = await accountB.signMessage(ethers.utils.arrayify(hash))
+            await nft.grantRole(ethers.utils.solidityKeccak256(['string'], ["MINTER_ROLE"]) , accountA.address)
+            await expect(nft.connect(accountB).openSeedBoxWithSignature(accountB.address, hash, signature)).to.be.reverted
+
+        })
+        it("should revert if signature wrong", async function () {
+            let message = "0" + "-" + accountB.address  
+            let hash =  ethers.utils.solidityKeccak256(['string'], [message]);
+            let signature = await accountB.signMessage(ethers.utils.arrayify(hash))
+            await nft.grantRole(ethers.utils.solidityKeccak256(['string'], ["MINTER_ROLE"]) , accountA.address)
+            await expect(nft.openSeedBoxWithSignature(accountC.address, hash, signature)).to.be.revertedWith('Signature does not match message sender')
+
+        })
+        it("should open seed box correctly", async function () {
+            let message = "0" + "-" + accountB.address  
+            let hash =  ethers.utils.solidityKeccak256(['string'], [message]);
+            let signature = await accountB.signMessage(ethers.utils.arrayify(hash))
+            await nft.grantRole(ethers.utils.solidityKeccak256(['string'], ["MINTER_ROLE"]) , accountA.address)
+            let openTx = await nft.connect(accountA).openSeedBoxWithSignature(accountB.address, hash, signature)
+            let blockTime = await ethers.provider.getBlock
+            await expect(openTx).to.be.emit(nft, "SeedBoxOpenedWithSignature").withArgs(0, accountB.address , blockTime)
+            expect(await nft.ownerOf(0)).to.be.equal(accountB.address)
         })
     })
     describe("#createMarketItem", () => {
@@ -206,7 +238,7 @@ describe('NFT contract', function () {
             await expect(nft.withdrawToken()).to.be.revertedWith("contract out of token")
         })
         it("should revert if caller is not owner", async function () {
-            await expect(nft.connect(accountB).withdrawToken()).to.be.revertedWith("Ownable: caller is not the owner")
+            await expect(nft.connect(accountB).withdrawToken()).to.be.revertedWith("AccessControl: account 0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc is missing role 0x0000000000000000000000000000000000000000000000000000000000000000")
         })
         it("withdraw correctly", async function () {
             let totalGachaAmount = (level1Price.add(level2Price)).mul(4)

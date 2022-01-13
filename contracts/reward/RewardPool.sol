@@ -15,7 +15,6 @@ contract RewardPool is AccessControl, Pausable, ReentrancyGuard {
     Counters.Counter private _itemIds;
     uint256 minAmount = 600000000000000000000;
     IERC20 public mainToken;
-    address public stakeAddress;
     event WithdrawRequested(
         uint256 id,
         address user,

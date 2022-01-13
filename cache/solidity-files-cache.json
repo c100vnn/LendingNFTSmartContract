@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\airdrop\\airdrop.sol": {
-      "lastModificationDate": 1641540921518,
+      "lastModificationDate": 1641922887631,
       "contentHash": "9fa1e826af49959d8855350228e440c0",
       "sourceName": "contracts/airdrop/airdrop.sol",
       "solcConfig": {
@@ -147,7 +147,7 @@
       ]
     },
     "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\staking\\StakingTest.sol": {
-      "lastModificationDate": 1641540921527,
+      "lastModificationDate": 1641922887752,
       "contentHash": "9ba6d719383d11e40c6aecc1f922aa09",
       "sourceName": "contracts/staking/StakingTest.sol",
       "solcConfig": {
@@ -258,7 +258,7 @@
       ]
     },
     "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\staking\\ReserveTest.sol": {
-      "lastModificationDate": 1641540921526,
+      "lastModificationDate": 1641922887746,
       "contentHash": "caa167d2552c6c0482f2ab1347fad2f0",
       "sourceName": "contracts/staking/ReserveTest.sol",
       "solcConfig": {
@@ -296,7 +296,7 @@
       ]
     },
     "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\staking-with-apr\\Staking.sol": {
-      "lastModificationDate": 1641653427269,
+      "lastModificationDate": 1641922887738,
       "contentHash": "6c4817080b24c88c10f315b0da75662f",
       "sourceName": "contracts/staking-with-apr/Staking.sol",
       "solcConfig": {
@@ -337,7 +337,7 @@
       ]
     },
     "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\staking-with-apr\\Reserve.sol": {
-      "lastModificationDate": 1641540921524,
+      "lastModificationDate": 1641922887720,
       "contentHash": "83141e71b7e9f4efd08142f7a14d1d1a",
       "sourceName": "contracts/staking-with-apr/Reserve.sol",
       "solcConfig": {
@@ -375,8 +375,8 @@
       ]
     },
     "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\reward\\RewardPool.sol": {
-      "lastModificationDate": 1641540921522,
-      "contentHash": "e554783d16ba48c01fe93668fe721154",
+      "lastModificationDate": 1642039043807,
+      "contentHash": "06424d88f105a400b29c7fa3c179909f",
       "sourceName": "contracts/reward/RewardPool.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -859,7 +859,7 @@
       ]
     },
     "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\BEP20\\FFT.sol": {
-      "lastModificationDate": 1641540921516,
+      "lastModificationDate": 1641922887610,
       "contentHash": "ed1d5366210912788b733b6e769be44c",
       "sourceName": "contracts/BEP20/FFT.sol",
       "solcConfig": {
@@ -974,7 +974,7 @@
       ]
     },
     "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\interface\\INFT.sol": {
-      "lastModificationDate": 1641540921519,
+      "lastModificationDate": 1641922887681,
       "contentHash": "08e89ef77b4ef497decb0ceb859322f2",
       "sourceName": "contracts/interface/INFT.sol",
       "solcConfig": {
@@ -1011,8 +1011,8 @@
       ]
     },
     "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\nft\\FarmFinanceNFT.sol": {
-      "lastModificationDate": 1641832897088,
-      "contentHash": "61bbdc86a8d0e42b424b370b62430ed5",
+      "lastModificationDate": 1641925299540,
+      "contentHash": "2d1fc5bea20e28f78a650e864bbd5933",
       "sourceName": "contracts/nft/FarmFinanceNFT.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -1049,6 +1049,49 @@
       ],
       "artifacts": [
         "FarmFinanceNFT"
+      ]
+    },
+    "C:\\Users\\Admin\\Coding\\farmville-smartcontract\\contracts\\deposit\\Deposit.sol": {
+      "lastModificationDate": 1642039359704,
+      "contentHash": "974dbca2e95921071c439cd5706ae481",
+      "sourceName": "contracts/deposit/Deposit.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/security/ReentrancyGuard.sol",
+        "@openzeppelin/contracts/utils/math/SafeMath.sol",
+        "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/security/Pausable.sol",
+        "@openzeppelin/contracts/access/AccessControl.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.4"
+      ],
+      "artifacts": [
+        "Deposit"
       ]
     }
   }

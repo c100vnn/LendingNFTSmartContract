@@ -35,7 +35,6 @@ interface RewardPoolInterface extends ethers.utils.Interface {
     "renounceRole(bytes32,address)": FunctionFragment;
     "requestWithdraw(uint256)": FunctionFragment;
     "revokeRole(bytes32,address)": FunctionFragment;
-    "stakeAddress()": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "unpause()": FunctionFragment;
     "withdraws(uint256)": FunctionFragment;
@@ -89,10 +88,6 @@ interface RewardPoolInterface extends ethers.utils.Interface {
     values: [BytesLike, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "stakeAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike]
   ): string;
@@ -140,10 +135,6 @@ interface RewardPoolInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "stakeAddress",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike
@@ -362,10 +353,6 @@ export class RewardPool extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    stakeAddress(overrides?: CallOverrides): Promise<[string]>;
-
-    "stakeAddress()"(overrides?: CallOverrides): Promise<[string]>;
-
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
@@ -521,10 +508,6 @@ export class RewardPool extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  stakeAddress(overrides?: CallOverrides): Promise<string>;
-
-  "stakeAddress()"(overrides?: CallOverrides): Promise<string>;
-
   supportsInterface(
     interfaceId: BytesLike,
     overrides?: CallOverrides
@@ -675,10 +658,6 @@ export class RewardPool extends BaseContract {
       account: string,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    stakeAddress(overrides?: CallOverrides): Promise<string>;
-
-    "stakeAddress()"(overrides?: CallOverrides): Promise<string>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -943,10 +922,6 @@ export class RewardPool extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    stakeAddress(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "stakeAddress()"(overrides?: CallOverrides): Promise<BigNumber>;
-
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
@@ -1100,10 +1075,6 @@ export class RewardPool extends BaseContract {
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
-
-    stakeAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "stakeAddress()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,

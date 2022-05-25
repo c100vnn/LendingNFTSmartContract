@@ -95,4 +95,27 @@ contract vNFT is WrapDoNFT {
         _burnVNft(tokenId);
         emit Redeem(info.oid, tokenId);
     }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override
+        returns (bool)
+    {
+        return
+            interfaceId == type(IComplexDoNFT).interfaceId ||
+            interfaceId == type(IRoyalty).interfaceId ||
+            super.supportsInterface(interfaceId);
+    }
+
+    function getUser(uint256 originalNftId)
+        public
+        view
+        virtual
+        override
+        returns (address)
+    {
+        return IERC4907(oNftAddress).userOf(originalNftId);
+    }
 }

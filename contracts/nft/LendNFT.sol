@@ -8,8 +8,7 @@ import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
 import '@openzeppelin/contracts/utils/cryptography/ECDSA.sol';
 import '@openzeppelin/contracts/access/AccessControl.sol';
 
-contract FarmFinanceNFT is AccessControl, ERC721, ReentrancyGuard {
-    using ECDSA for bytes32;
+contract LendNFT is AccessControl, ERC721, ReentrancyGuard {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     Counters.Counter private _itemIds;

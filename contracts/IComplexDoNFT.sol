@@ -10,7 +10,6 @@ interface IComplexDoNFT is IBaseDoNFT {
         address nftAddress_,
         address market_,
         address owner_,
-        address admin_,
-        address royaltyAdmin_
+        address admin_
     ) external;
 }

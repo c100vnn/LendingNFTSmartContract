@@ -255,8 +255,7 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
         returns (
             uint256 totalPrice,
             uint256 leftTotalPrice,
-            uint256 curFee,
-            uint256 curRoyalty
+            uint256 curFee
         )
     {
         PaymentNormal storage pNormal = paymentNormalMap[nftAddress][nftId];

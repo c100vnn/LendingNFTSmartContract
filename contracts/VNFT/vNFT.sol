@@ -105,7 +105,6 @@ contract vNFT is WrapDoNFT {
     {
         return
             interfaceId == type(IComplexDoNFT).interfaceId ||
-            interfaceId == type(IRoyalty).interfaceId ||
             super.supportsInterface(interfaceId);
     }
 

@@ -87,7 +87,7 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
         } else {
             onlyApprovedOrOwner(msg.sender, oNftAddress, oNftId);
         }
-        require(maxDuration > block.timestamp, "invalid maxDuration");
+        require(maxDuration > 0, "invalid maxDuration");
         nftId = IComplexDoNFT(doNftAddress).mintVNft(oNftId);
     }
 
@@ -128,7 +128,7 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
         address renter
     ) internal {
         onlyApprovedOrOwner(msg.sender, nftAddress, nftId);
-        require(maxDuration > block.timestamp, "invalid maxDuration");
+        require(maxDuration > 0, "invalid maxDuration");
         require(
             minDuration <= IComplexDoNFT(nftAddress).getMaxDuration(),
             "Error:minDuration > max"
@@ -139,15 +139,15 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
             ),
             "not doNFT"
         );
-        (, , uint64 dEnd) = IComplexDoNFT(nftAddress).getDurationByIndex(
+        (, uint64 dStart, uint64 dEnd) = IComplexDoNFT(nftAddress).getDurationByIndex(
             nftId,
             0
         );
-        if (maxDuration > dEnd) {
-            maxDuration = dEnd;
+        if (maxDuration + dStart > dEnd) {
+            maxDuration = dEnd - dStart;
         }
-        if (maxDuration > block.timestamp + maxIndate) {
-            maxDuration = uint64(block.timestamp) + maxIndate;
+        if (maxDuration > maxIndate) {
+            maxDuration = maxIndate;
         }
 
         address _owner = ERC721(nftAddress).ownerOf(nftId);
@@ -210,24 +210,24 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
     ) public override payable virtual whenNotPaused nonReentrant returns (uint256 tid) {
         require(isLendOrderValid(nftAddress, nftId), "invalid order");
         Lending storage lending = lendingMap[nftAddress][nftId];
-        uint64 Duration = uint64(block.timestamp + duration - 1);
-        if (Duration > lending.maxDuration) {
-            Duration = lending.maxDuration;
+        if (duration > lending.maxDuration) {
+            duration = lending.maxDuration;
         }
-        (, uint64 dEnd) = IComplexDoNFT(nftAddress).getDuration(durationId);
-        if (Duration > dEnd) {
-            Duration = dEnd;
+        (uint64 dStart, uint64 dEnd) = IComplexDoNFT(nftAddress).getDuration(durationId);
+        if (duration > dEnd - dStart) {
+            duration = dEnd - dStart;
         }
         uint64 startTime = uint64(block.timestamp);
-        if (!(Duration == dEnd || Duration == lending.maxDuration)) {
+        if (!(duration == dEnd - dStart || duration == lending.maxDuration)) {
             require(duration >= lending.minDuration, "duration < minDuration");
         }
-        distributePayment(nftAddress, nftId, startTime, Duration);
+        uint64 endTime = uint64(block.timestamp + duration - 1);
+        distributePayment(nftAddress, nftId, duration);
         tid = IComplexDoNFT(nftAddress).mint(
             nftId,
             durationId,
             startTime,
-            Duration,
+            endTime,
             msg.sender,
             user
         );
@@ -238,7 +238,7 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
             nftAddress,
             nftId,
             startTime,
-            Duration,
+            endTime,
             pNormal.pricePerDay,
             tid,
             pNormal.token
@@ -248,8 +248,7 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
     function distributePayment(
         address nftAddress,
         uint256 nftId,
-        uint64 startTime,
-        uint64 Duration
+        uint64 duration
     )
         internal
         returns (
@@ -259,7 +258,7 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
         )
     {
         PaymentNormal storage pNormal = paymentNormalMap[nftAddress][nftId];
-        totalPrice = (pNormal.pricePerDay * (Duration - startTime + 1)) / 86400;
+        totalPrice = (pNormal.pricePerDay * duration) / 86400;
         curFee = (totalPrice * fee) / E5;
         leftTotalPrice = totalPrice - curFee;
 
@@ -346,7 +345,7 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
         }
         return
             lending.nftId > 0 &&
-            lending.maxDuration > block.timestamp &&
+            lending.maxDuration > 0 &&
             lending.nonce == IComplexDoNFT(nftAddress).getNonce(nftId);
     }
 

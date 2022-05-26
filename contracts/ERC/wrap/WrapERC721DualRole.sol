@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "../ERC4907.sol";
+import '../ERC4907.sol';
 import "./IWrapNFT.sol";
 
 contract WrapERC721DualRole is ERC4907, IWrapNFT {
@@ -14,24 +14,24 @@ contract WrapERC721DualRole is ERC4907, IWrapNFT {
         string memory symbol_,
         address originalAddress_
     ) ERC4907(name_, symbol_) {
-        require(_originalAddress == address(0), "inited already");
+        require(_originalAddress == address(0), 'inited already');
         require(
             IERC165(originalAddress_).supportsInterface(
                 type(IERC721).interfaceId
             ),
-            "not ERC721"
+            'not ERC721'
         );
         _originalAddress = originalAddress_;
     }
 
-    function originalAddress() public view returns (address) {
+    function originalAddress() public override view returns (address) {
         return _originalAddress;
     }
 
-    function stake(uint256 tokenId) public returns (uint256) {
+    function stake(uint256 tokenId) public override returns (uint256) {
         require(
             onlyApprovedOrOwner(msg.sender, _originalAddress, tokenId),
-            "only approved or owner"
+            'only approved or owner'
         );
         address lastOwner = ERC721(_originalAddress).ownerOf(tokenId);
         ERC721(_originalAddress).safeTransferFrom(
@@ -44,10 +44,10 @@ contract WrapERC721DualRole is ERC4907, IWrapNFT {
         return tokenId;
     }
 
-    function redeem(uint256 tokenId) public {
+    function redeem(uint256 tokenId) public override {
         require(
             _isApprovedOrOwner(_msgSender(), tokenId),
-            "ERC721: transfer caller is not owner nor approved"
+            'ERC721: transfer caller is not owner nor approved'
         );
         ERC721(_originalAddress).safeTransferFrom(
             address(this),
@@ -66,7 +66,7 @@ contract WrapERC721DualRole is ERC4907, IWrapNFT {
         address owner = ERC721(nftAddress).ownerOf(tokenId);
         require(
             owner != address(0),
-            "ERC721: operator query for nonexistent token"
+            'ERC721: operator query for nonexistent token'
         );
         return (spender == owner ||
             ERC721(nftAddress).getApproved(tokenId) == spender ||
@@ -100,7 +100,7 @@ contract WrapERC721DualRole is ERC4907, IWrapNFT {
         address from,
         uint256 tokenId,
         bytes calldata data
-    ) external pure virtual override returns (bytes4) {
+    ) external override pure virtual returns (bytes4) {
         bytes4 received = 0x150b7a02;
         return received;
     }
@@ -114,7 +114,6 @@ contract WrapERC721DualRole is ERC4907, IWrapNFT {
         returns (bool)
     {
         return
-            interfaceId == type(IWrapNFT).interfaceId ||
             interfaceId == type(IERC4907).interfaceId ||
             super.supportsInterface(interfaceId);
     }

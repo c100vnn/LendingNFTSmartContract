@@ -5,11 +5,13 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "./OwnableContract.sol";
+import "./IBaseDoNFT.sol";
 
 abstract contract BaseDoNFT is
     OwnableContract,
     ERC721Upgradeable,
     ReentrancyGuardUpgradeable,
+    IBaseDoNFT
 {
     using EnumerableSet for EnumerableSet.UintSet;
     using Strings for uint256;

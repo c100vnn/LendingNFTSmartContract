@@ -1,19 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
-import "./BaseDoNFT.sol";
+import '@openzeppelin/contracts/utils/structs/EnumerableSet.sol';
+import './IWrapDoNFT.sol';
+import './BaseDoNFT.sol';
 
-abstract contract WrapDoNFT is BaseDoNFT {
+abstract contract WrapDoNFT is BaseDoNFT, IWrapDoNFT {
     using EnumerableSet for EnumerableSet.UintSet;
-    event Redeem(uint256 oid, uint256 tokenId);
 
     function couldRedeem(uint256 tokenId, uint256[] calldata durationIds)
         public
         view
+        override
         returns (bool)
     {
-        require(isVNft(tokenId), "not vNFT");
+        require(isVNft(tokenId), 'not vNFT');
         DoNftInfo storage info = doNftMapping[tokenId];
         Duration storage duration = durationMapping[durationIds[0]];
         if (duration.start > block.timestamp) {
@@ -23,7 +24,7 @@ abstract contract WrapDoNFT is BaseDoNFT {
         for (uint256 index = 1; index < durationIds.length; index++) {
             require(
                 info.durationList.contains(durationIds[index]),
-                string(abi.encodePacked("not contails", durationIds[index]))
+                string(abi.encodePacked('not contails', durationIds[index]))
             );
             duration = durationMapping[durationIds[index]];
             if (lastEndTime + 1 == duration.start) {
@@ -36,12 +37,13 @@ abstract contract WrapDoNFT is BaseDoNFT {
     function redeem(uint256 tokenId, uint256[] calldata durationIds)
         public
         virtual
+        override
     {
         require(
             _isApprovedOrOwner(_msgSender(), tokenId),
-            "ERC721: transfer caller is not owner nor approved"
+            'ERC721: transfer caller is not owner nor approved'
         );
-        require(couldRedeem(tokenId, durationIds), "cannot redeem");
+        require(couldRedeem(tokenId, durationIds), 'cannot redeem');
         DoNftInfo storage info = doNftMapping[tokenId];
         ERC721(oNftAddress).safeTransferFrom(
             address(this),

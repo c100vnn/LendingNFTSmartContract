@@ -4,8 +4,29 @@ pragma solidity ^0.8.0;
 import '../WrapDoNFT.sol';
 import '../ERC/IERC4907.sol';
 import '../ERC/wrap/IWrapNFT.sol';
+import '../IComplexDoNFT.sol';
 
-contract vNFT is WrapDoNFT {
+contract vNFT is WrapDoNFT, IComplexDoNFT {
+    using EnumerableSet for EnumerableSet.UintSet;
+
+    function initialize(
+        string memory name_,
+        string memory symbol_,
+        address nftAddress_,
+        address market_,
+        address owner_,
+        address admin_
+    ) public virtual override initializer {
+        super._BaseDoNFT_init(
+            name_,
+            symbol_,
+            nftAddress_,
+            market_,
+            owner_,
+            admin_
+        );
+    }
+
     function mintVNft(uint256 oid)
         public
         virtual
@@ -32,7 +53,7 @@ contract vNFT is WrapDoNFT {
                     oid
                 );
                 ERC721(gameNFTAddress).approve(oNftAddress, oid);
-                oid = IWrapNFT(oNftAddress).stake(oid);
+                // oid = IWrapNFT(oNftAddress).stake(oid);
             } else {
                 require(
                     onlyApprovedOrOwner(msg.sender, oNftAddress, oid),

@@ -406,15 +406,15 @@ abstract contract BaseDoNFT is
         return oid2vid[originalNftId];
     }
 
-    function onERC721Received(
-        address operator,
-        address from,
-        uint256 tokenId,
-        bytes calldata data
-    ) external pure virtual override returns (bytes4) {
-        bytes4 received = 0x150b7a02;
-        return received;
-    }
+    // function onERC721Received(
+    //     address operator,
+    //     address from,
+    //     uint256 tokenId,
+    //     bytes calldata data
+    // ) external pure virtual override returns (bytes4) {
+    //     bytes4 received = 0x150b7a02;
+    //     return received;
+    // }
 
     function _beforeTokenTransfer(
         address from,

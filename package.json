@@ -23,6 +23,10 @@
     "solidity-coverage": "^0.7.21"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.6.0"
+    "@nomiclabs/hardhat-truffle5": "^2.0.6",
+    "@nomiclabs/hardhat-web3": "^2.0.0",
+    "@openzeppelin/contracts": "^4.6.0",
+    "@openzeppelin/contracts-upgradeable": "^4.6.0",
+    "erc721a": "^4.0.0"
   }
 }

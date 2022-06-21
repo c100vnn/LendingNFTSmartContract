@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+
 import "./OwnableContract.sol";
 // import "./IComplexDoNFT.sol";
 import "./ERC4907/wrap/WrapERC721DualRole.sol";
@@ -18,6 +19,7 @@ contract DoNFTFactory is OwnableContract {
         address royaltyAdmin,
         string gameKey
     );
+
 
     event DeployWrapERC721DualRole(
         address wrapNFT,
@@ -121,4 +123,5 @@ contract DoNFTFactory is OwnableContract {
     {
         return doNftMapping[nftAddress][gameKey];
     }
+
 }

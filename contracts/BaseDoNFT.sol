@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 import '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol';
@@ -52,7 +53,7 @@ abstract contract BaseDoNFT is
     mapping(uint256 => DoNftInfo) internal doNftMapping;
     mapping(uint256 => Duration) internal durationMapping;
     mapping(uint256 => uint256) internal oid2vid;
-
+   
     bool private isOnlyNow;
 
     function _BaseDoNFT_init(
@@ -105,6 +106,8 @@ abstract contract BaseDoNFT is
 
     function getDurationIdList(uint256 tokenId)
         external
+
+        override
         view
         returns (uint256[] memory)
     {
@@ -114,6 +117,9 @@ abstract contract BaseDoNFT is
 
     function getDuration(uint256 durationId)
         public
+
+        override
+
         view
         returns (uint64, uint64)
     {
@@ -123,6 +129,9 @@ abstract contract BaseDoNFT is
 
     function getDurationByIndex(uint256 tokenId, uint256 index)
         public
+
+        override
+
         view
         returns (
             uint256 durationId,
@@ -131,13 +140,17 @@ abstract contract BaseDoNFT is
         )
     {
         DoNftInfo storage info = doNftMapping[tokenId];
-        require(index < info.durationList.length(), 'out of range');
+
+        require(index < info.durationList.length(), "out of range");
+
         durationId = info.durationList.at(index);
         (start, end) = getDuration(durationId);
         return (durationId, start, end);
     }
 
-    function isValidNow(uint256 tokenId) public view returns (bool isValid) {
+
+    function isValidNow(uint256 tokenId) public override view returns (bool isValid) {
+
         DoNftInfo storage info = doNftMapping[tokenId];
         uint256 length = info.durationList.length();
         uint256 durationId;
@@ -155,6 +168,8 @@ abstract contract BaseDoNFT is
 
     function getDurationListLength(uint256 tokenId)
         external
+
+        override
         view
         returns (uint256)
     {
@@ -163,6 +178,8 @@ abstract contract BaseDoNFT is
 
     function getDoNftInfo(uint256 tokenId)
         public
+
+        override
         view
         returns (
             uint256 oid,
@@ -187,7 +204,8 @@ abstract contract BaseDoNFT is
         }
     }
 
-    function getNonce(uint256 tokenId) external view returns (uint64) {
+
+    function getNonce(uint256 tokenId) external override view returns (uint64) {
         return doNftMapping[tokenId].nonce;
     }
 
@@ -198,12 +216,15 @@ abstract contract BaseDoNFT is
         uint64 end,
         address to,
         address user
-    ) public onlyNow(start) nonReentrant returns (uint256 tid) {
+
+    ) public override onlyNow(start) nonReentrant returns (uint256 tid) {
+
         if (start < block.timestamp) {
             start = uint64(block.timestamp);
         }
         require(
             _isApprovedOrOwner(_msgSender(), tokenId),
+
             'not owner nor approved'
         );
         require(
@@ -216,6 +237,7 @@ abstract contract BaseDoNFT is
         require(
             start >= duration.start && end <= duration.end,
             'invalid duration'
+
         );
         uint256 tDurationId;
         if (start == duration.start && end == duration.end) {
@@ -247,11 +269,13 @@ abstract contract BaseDoNFT is
         emit MetadataUpdate(tokenId);
     }
 
-    function setMaxDuration(uint64 v) public onlyAdmin {
+
+    function setMaxDuration(uint64 v) public override onlyAdmin {
         maxDuration = v;
     }
 
-    function getMaxDuration() public view returns (uint64) {
+    function getMaxDuration() public override view returns (uint64) {
+
         return maxDuration;
     }
 
@@ -298,6 +322,7 @@ abstract contract BaseDoNFT is
     ) public {
         require(
             _isApprovedOrOwner(_msgSender(), tokenId),
+
             'ERC721: transfer caller is not owner nor approved'
         );
         require(contains(tokenId, durationId), 'not contains');
@@ -310,6 +335,7 @@ abstract contract BaseDoNFT is
 
         Duration storage duration = durationMapping[durationId];
         Duration storage targetDuration = durationMapping[targetDurationId];
+
         if (duration.end < targetDuration.start) {
             require(duration.end + 1 == targetDuration.start);
             targetDuration.start = duration.start;
@@ -354,7 +380,8 @@ abstract contract BaseDoNFT is
         address to,
         uint256 tokenId,
         uint256 durationId
-    ) public virtual {
+
+    ) public override virtual {
         require(
             _isApprovedOrOwner(_msgSender(), tokenId),
             'not owner nor approved'
@@ -364,6 +391,7 @@ abstract contract BaseDoNFT is
         require(duration.end >= block.timestamp, 'invalid end');
         require(duration.start <= block.timestamp, 'invalid start');
         require(info.durationList.contains(durationId), 'not contains');
+
         emit CheckIn(
             msg.sender,
             to,
@@ -389,7 +417,9 @@ abstract contract BaseDoNFT is
         }
 
         if (info.durationList.length() == 0) {
+
             require(!isVNft(tokenId), 'can not burn vNFT');
+
             _burn(tokenId);
         }
     }
@@ -411,22 +441,27 @@ abstract contract BaseDoNFT is
         );
     }
 
-    function isVNft(uint256 tokenId) public view returns (bool) {
+
+    function isVNft(uint256 tokenId) public override view returns (bool) {
+
         if (tokenId == 0) return false;
 
         return oid2vid[doNftMapping[tokenId].oid] == tokenId;
     }
 
-    function getOriginalNftAddress() external view returns (address) {
+    function getOriginalNftAddress() external override view returns (address) {
         return oNftAddress;
     }
 
-    function getOriginalNftId(uint256 tokenId) external view returns (uint256) {
+    function getOriginalNftId(uint256 tokenId) external override view returns (uint256) {
+
         DoNftInfo storage info = doNftMapping[tokenId];
         return info.oid;
     }
 
-    function getVNftId(uint256 originalNftId) public view returns (uint256) {
+
+    function getVNftId(uint256 originalNftId) public override view returns (uint256) {
+
         return oid2vid[originalNftId];
     }
 
@@ -435,7 +470,8 @@ abstract contract BaseDoNFT is
     //     address from,
     //     uint256 tokenId,
     //     bytes calldata data
-    // ) external pure virtual returns (bytes4) {
+
+    // ) external pure virtual override returns (bytes4) {
     //     bytes4 received = 0x150b7a02;
     //     return received;
     // }
@@ -449,19 +485,19 @@ abstract contract BaseDoNFT is
         doNftMapping[tokenId].nonce++;
     }
 
-    // function supportsInterface(bytes4 interfaceId)
-    //     public
-    //     view
-    //     virtual
-    //     override
-    //     returns (bool)
-    // {
-    //     return
-    //         interfaceId == type(IBaseDoNFT).interfaceId ||
-    //         super.supportsInterface(interfaceId);
-    // }
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override
+        returns (bool)
+    {
+        return
+            interfaceId == type(IBaseDoNFT).interfaceId ||
+            super.supportsInterface(interfaceId);
+    }
 
-    function exists(uint256 tokenId) public view virtual returns (bool) {
+    function exists(uint256 tokenId) public override view virtual returns (bool) {
         return _exists(tokenId);
     }
 

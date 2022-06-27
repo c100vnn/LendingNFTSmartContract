@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import '../ERC4907.sol';
-import "./IWrapNFT.sol";
+import './IWrapNFT.sol';
 
 contract WrapERC721DualRole is ERC4907, IWrapNFT {
     address private _originalAddress;
@@ -24,11 +24,15 @@ contract WrapERC721DualRole is ERC4907, IWrapNFT {
         _originalAddress = originalAddress_;
     }
 
-    function originalAddress() public override view returns (address) {
+    function originalAddress() public view override returns (address) {
         return _originalAddress;
     }
 
-    function stake(uint256 tokenId) public override returns (uint256) {
+    function stake(uint256 tokenId)
+        public
+        override(IWrapNFT)
+        returns (uint256)
+    {
         require(
             onlyApprovedOrOwner(msg.sender, _originalAddress, tokenId),
             'only approved or owner'
@@ -100,7 +104,7 @@ contract WrapERC721DualRole is ERC4907, IWrapNFT {
         address from,
         uint256 tokenId,
         bytes calldata data
-    ) external override pure virtual returns (bytes4) {
+    ) external pure virtual override returns (bytes4) {
         bytes4 received = 0x150b7a02;
         return received;
     }

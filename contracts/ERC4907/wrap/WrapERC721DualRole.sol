@@ -24,11 +24,11 @@ contract WrapERC721DualRole is ERC4907, IWrapNFT {
         _originalAddress = originalAddress_;
     }
 
-    function originalAddress() public view returns (address) {
+    function originalAddress() public override view returns (address) {
         return _originalAddress;
     }
 
-    function stake(uint256 tokenId) public returns (uint256) {
+    function stake(uint256 tokenId) public override returns (uint256) {
         require(
             onlyApprovedOrOwner(msg.sender, _originalAddress, tokenId),
             "only approved or owner"
@@ -44,7 +44,7 @@ contract WrapERC721DualRole is ERC4907, IWrapNFT {
         return tokenId;
     }
 
-    function redeem(uint256 tokenId) public {
+    function redeem(uint256 tokenId) public override {
         require(
             _isApprovedOrOwner(_msgSender(), tokenId),
             "ERC721: transfer caller is not owner nor approved"

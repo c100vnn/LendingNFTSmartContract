@@ -5,9 +5,13 @@ import '../BaseDoNFT.sol';
 import '../ERC4907/IERC4907.sol';
 import '../ERC4907/wrap/IWrapNFT.sol';
 import '../DoubleSVG.sol';
+import '../IComplexDoNFT.sol';
+import '../WrapDoNFT.sol';
 
-contract doNft is BaseDoNFT {
+abstract contract doNft is WrapDoNFT, IComplexDoNFT {
     using EnumerableSet for EnumerableSet.UintSet;
+
+    constructor() {}
 
     function initialize(
         string memory name_,
@@ -16,7 +20,7 @@ contract doNft is BaseDoNFT {
         address market_,
         address owner_,
         address admin_
-    ) public virtual initializer {
+    ) public override {
         super._BaseDoNFT_init(
             name_,
             symbol_,
@@ -27,9 +31,27 @@ contract doNft is BaseDoNFT {
         );
     }
 
+    // function _BaseDoNFT_init(
+    //     string memory name_,
+    //     string memory symbol_,
+    //     address address_,
+    //     address market_,
+    //     address owner_,
+    //     address admin_
+    // ) internal onlyInitializing {
+    //     __ERC721_init(name_, symbol_);
+    //     __ReentrancyGuard_init();
+    //     initOwnableContract(owner_, admin_);
+    //     oNftAddress = address_;
+    //     market = market_;
+    //     isOnlyNow = true;
+    //     maxDuration = 180 days;
+    // }
+
     function mintVNft(uint256 oid)
         public
         virtual
+        override
         nonReentrant
         returns (uint256 tid)
     {
@@ -88,7 +110,7 @@ contract doNft is BaseDoNFT {
         address to,
         uint256 tokenId,
         uint256 durationId
-    ) public virtual override(BaseDoNFT) {
+    ) public virtual override(IBaseDoNFT, BaseDoNFT) {
         BaseDoNFT.checkIn(to, tokenId, durationId);
         IERC4907(oNftAddress).setUser(
             doNftMapping[tokenId].oid,
@@ -101,15 +123,42 @@ contract doNft is BaseDoNFT {
         public
         view
         virtual
+        override(IBaseDoNFT)
         returns (address)
     {
         return IERC4907(oNftAddress).userOf(originalNftId);
     }
 
+    function couldRedeem(uint256 tokenId, uint256[] calldata durationIds)
+        public
+        view
+        override(WrapDoNFT)
+        returns (bool)
+    {
+        require(isVNft(tokenId), 'not vNFT');
+        DoNftInfo storage info = doNftMapping[tokenId];
+        Duration storage duration = durationMapping[durationIds[0]];
+        if (duration.start > block.timestamp) {
+            return false;
+        }
+        uint64 lastEndTime = duration.end;
+        for (uint256 index = 1; index < durationIds.length; index++) {
+            require(
+                info.durationList.contains(durationIds[index]),
+                string(abi.encodePacked('not contails', durationIds[index]))
+            );
+            duration = durationMapping[durationIds[index]];
+            if (lastEndTime + 1 == duration.start) {
+                lastEndTime = duration.end;
+            }
+        }
+        return lastEndTime == type(uint64).max;
+    }
+
     function redeem(uint256 tokenId, uint256[] calldata durationIds)
         public
         virtual
-        override
+        override(WrapDoNFT)
     {
         require(
             _isApprovedOrOwner(_msgSender(), tokenId),
@@ -140,18 +189,17 @@ contract doNft is BaseDoNFT {
         emit Redeem(info.oid, tokenId);
     }
 
-    // function supportsInterface(bytes4 interfaceId)
-    //     public
-    //     view
-    //     virtual
-    //     override
-    //     returns (bool)
-    // {
-    //     return
-    //         interfaceId == type(IComplexDoNFT).interfaceId ||
-    //         interfaceId == type(IRoyalty).interfaceId ||
-    //         super.supportsInterface(interfaceId);
-    // }
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override
+        returns (bool)
+    {
+        return
+            interfaceId == type(IComplexDoNFT).interfaceId ||
+            super.supportsInterface(interfaceId);
+    }
 
     function tokenURI(uint256 tokenId)
         public

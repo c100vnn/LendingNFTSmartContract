@@ -11,7 +11,8 @@ abstract contract WrapDoNFT is BaseDoNFT, IWrapDoNFT {
     function couldRedeem(uint256 tokenId, uint256[] calldata durationIds)
         public
         view
-        override
+        virtual
+        override(IWrapDoNFT)
         returns (bool)
     {
         require(isVNft(tokenId), 'not vNFT');
@@ -37,7 +38,7 @@ abstract contract WrapDoNFT is BaseDoNFT, IWrapDoNFT {
     function redeem(uint256 tokenId, uint256[] calldata durationIds)
         public
         virtual
-        override
+        override(IWrapDoNFT)
     {
         require(
             _isApprovedOrOwner(_msgSender(), tokenId),

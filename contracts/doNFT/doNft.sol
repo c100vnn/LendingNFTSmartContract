@@ -132,6 +132,7 @@ abstract contract doNft is WrapDoNFT, IComplexDoNFT {
     function couldRedeem(uint256 tokenId, uint256[] calldata durationIds)
         public
         view
+        virtual
         override(WrapDoNFT)
         returns (bool)
     {

@@ -975,7 +975,7 @@
           "type": "bytes4"
         }
       ],
-      "stateMutability": "nonpayable",
+      "stateMutability": "pure",
       "type": "function"
     },
     {

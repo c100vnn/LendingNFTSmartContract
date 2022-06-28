@@ -7,7 +7,7 @@ import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.
 import "./IMarket.sol";
 import "../OwnableContract.sol";
 import "../IComplexDoNFT.sol";
-import "../ERC/wrap/IWrapNFT.sol";
+import "../ERC4907/wrap/IWrapNFT.sol";
 
 contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
     uint64 private constant E5 = 1e5;

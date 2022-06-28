@@ -6,6 +6,7 @@ import '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.
 import '@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol';
 import './OwnableContract.sol';
 import './IBaseDoNFT.sol';
+import './ERC4907/IERC4907.sol';
 
 abstract contract BaseDoNFT is
     OwnableContract,
@@ -361,43 +362,43 @@ abstract contract BaseDoNFT is
         );
     }
 
-    function gc(uint256 tokenId, uint256[] calldata durationIds) public {
-        DoNftInfo storage info = doNftMapping[tokenId];
-        uint256 durationId;
-        Duration storage duration;
-        for (uint256 index = 0; index < durationIds.length; index++) {
-            durationId = durationIds[index];
-            if (contains(tokenId, durationId)) {
-                duration = durationMapping[durationId];
-                if (duration.end <= block.timestamp) {
-                    _burnDuration(tokenId, durationId);
-                }
-            }
-        }
+    // function gc(uint256 tokenId, uint256[] calldata durationIds) public {
+    //     DoNftInfo storage info = doNftMapping[tokenId];
+    //     uint256 durationId;
+    //     Duration storage duration;
+    //     for (uint256 index = 0; index < durationIds.length; index++) {
+    //         durationId = durationIds[index];
+    //         if (contains(tokenId, durationId)) {
+    //             duration = durationMapping[durationId];
+    //             if (duration.end <= block.timestamp) {
+    //                 _burnDuration(tokenId, durationId);
+    //             }
+    //         }
+    //     }
 
-        if (info.durationList.length() == 0) {
-            require(!isVNft(tokenId), 'can not burn vNFT');
+    //     if (info.durationList.length() == 0) {
+    //         require(!isVNft(tokenId), 'can not burn vNFT');
 
-            _burn(tokenId);
-        }
-    }
+    //         _burn(tokenId);
+    //     }
+    // }
 
-    function getFingerprint(uint256 tokenId)
-        public
-        view
-        returns (bytes32 print)
-    {
-        (
-            uint256 oid,
-            uint256[] memory durationIds,
-            uint64[] memory starts,
-            uint64[] memory ends,
-            uint64 nonce
-        ) = getDoNftInfo(tokenId);
-        print = keccak256(
-            abi.encodePacked(oid, durationIds, starts, ends, nonce)
-        );
-    }
+    // function getFingerprint(uint256 tokenId)
+    //     public
+    //     view
+    //     returns (bytes32 print)
+    // {
+    //     (
+    //         uint256 oid,
+    //         uint256[] memory durationIds,
+    //         uint64[] memory starts,
+    //         uint64[] memory ends,
+    //         uint64 nonce
+    //     ) = getDoNftInfo(tokenId);
+    //     print = keccak256(
+    //         abi.encodePacked(oid, durationIds, starts, ends, nonce)
+    //     );
+    // }
 
     function isVNft(uint256 tokenId) public view override returns (bool) {
         if (tokenId == 0) return false;
@@ -489,19 +490,29 @@ abstract contract BaseDoNFT is
         market = _market;
     }
 
-    function multicall(bytes[] calldata data)
-        external
-        returns (bytes[] memory results)
+    // function multicall(bytes[] calldata data)
+    //     external
+    //     returns (bytes[] memory results)
+    // {
+    //     results = new bytes[](data.length);
+    //     for (uint256 i = 0; i < data.length; i++) {
+    //         (bool success, bytes memory result) = address(this).delegatecall(
+    //             data[i]
+    //         );
+    //         if (success) {
+    //             results[i] = result;
+    //         }
+    //     }
+    //     return results;
+    // }
+
+    function getUser(uint256 originalNftId)
+        public
+        view
+        virtual
+        override(IBaseDoNFT)
+        returns (address)
     {
-        results = new bytes[](data.length);
-        for (uint256 i = 0; i < data.length; i++) {
-            (bool success, bytes memory result) = address(this).delegatecall(
-                data[i]
-            );
-            if (success) {
-                results[i] = result;
-            }
-        }
-        return results;
+        return IERC4907(oNftAddress).userOf(originalNftId);
     }
 }

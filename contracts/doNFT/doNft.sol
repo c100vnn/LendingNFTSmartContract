@@ -8,10 +8,8 @@ import '../DoubleSVG.sol';
 import '../IComplexDoNFT.sol';
 import '../WrapDoNFT.sol';
 
-abstract contract doNft is WrapDoNFT, IComplexDoNFT {
+contract doNft is WrapDoNFT, IComplexDoNFT {
     using EnumerableSet for EnumerableSet.UintSet;
-
-    constructor() {}
 
     function initialize(
         string memory name_,
@@ -30,23 +28,6 @@ abstract contract doNft is WrapDoNFT, IComplexDoNFT {
             admin_
         );
     }
-
-    // function _BaseDoNFT_init(
-    //     string memory name_,
-    //     string memory symbol_,
-    //     address address_,
-    //     address market_,
-    //     address owner_,
-    //     address admin_
-    // ) internal onlyInitializing {
-    //     __ERC721_init(name_, symbol_);
-    //     __ReentrancyGuard_init();
-    //     initOwnableContract(owner_, admin_);
-    //     oNftAddress = address_;
-    //     market = market_;
-    //     isOnlyNow = true;
-    //     maxDuration = 180 days;
-    // }
 
     function mintVNft(uint256 oid)
         public
@@ -123,7 +104,7 @@ abstract contract doNft is WrapDoNFT, IComplexDoNFT {
         public
         view
         virtual
-        override(IBaseDoNFT)
+        override(IBaseDoNFT, BaseDoNFT)
         returns (address)
     {
         return IERC4907(oNftAddress).userOf(originalNftId);

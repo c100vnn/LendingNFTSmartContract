@@ -23,9 +23,20 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: "0.8.4",
+  settings: {
+    optimizer: {
+      enabled: true,
+      runs: 50
+    }
+  },
   networks: {
-    ropsten: {
-      url: process.env.ROPSTEN_URL || "",
+    hardhat: {
+      allowUnlimitedContractSize: true,
+
+    },
+    rinkeby: {
+      allowUnlimitedContractSize: true,
+      url: process.env.RINKEBY_URL || "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },

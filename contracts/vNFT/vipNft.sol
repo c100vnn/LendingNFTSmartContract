@@ -5,7 +5,7 @@ import '../BaseDoNFT.sol';
 import '../CheckInMgr.sol';
 import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
 
-abstract contract VipDoNFT is CheckInMgr, BaseDoNFT {
+contract VipDoNFT is CheckInMgr, BaseDoNFT {
     function mintVNft(uint256 oid)
         public 
         override

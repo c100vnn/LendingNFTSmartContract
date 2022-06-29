@@ -329,58 +329,6 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "durationId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "targetTokenId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "targetDurationId",
-          "type": "uint256"
-        }
-      ],
-      "name": "concat",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "durationId",
-          "type": "uint256"
-        }
-      ],
-      "name": "contains",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [],
       "name": "curDoid",
       "outputs": [
@@ -1009,32 +957,6 @@
         }
       ],
       "name": "setApprovalForAll",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "bool",
-          "name": "v",
-          "type": "bool"
-        }
-      ],
-      "name": "setIsOnlyNow",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_market",
-          "type": "address"
-        }
-      ],
-      "name": "setMarket",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

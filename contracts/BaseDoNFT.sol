@@ -46,10 +46,14 @@ abstract contract BaseDoNFT is
         maxDuration = 180 days;
     }
 
-    modifier onlyNow(uint64 start) {
+    function _onlyNow(uint64 start) private view {
         if (isOnlyNow) {
             require(start <= block.timestamp, 'must from now');
         }
+    }
+
+    modifier onlyNow(uint64 start) {
+        _onlyNow(start);
         _;
     }
 
@@ -65,12 +69,12 @@ abstract contract BaseDoNFT is
             ERC721(nftAddress).isApprovedForAll(_owner, spender));
     }
 
-    function setIsOnlyNow(bool v) public onlyAdmin {
+    function setIsOnlyNow(bool v) private onlyAdmin {
         isOnlyNow = v;
     }
 
     function contains(uint256 tokenId, uint256 durationId)
-        public
+        private
         view
         returns (bool)
     {
@@ -270,7 +274,7 @@ abstract contract BaseDoNFT is
         uint256 oid_,
         uint64 start,
         uint64 end
-    ) internal returns (uint256) {
+    ) internal virtual returns (uint256) {
         newDoNft(oid_, start, end);
         _safeMint(to, curDoid);
         return curDoid;
@@ -281,7 +285,7 @@ abstract contract BaseDoNFT is
         uint256 durationId,
         uint256 targetTokenId,
         uint256 targetDurationId
-    ) public {
+    ) internal {
         require(
             _isApprovedOrOwner(_msgSender(), tokenId),
             'ERC721: transfer caller is not owner nor approved'
@@ -362,44 +366,6 @@ abstract contract BaseDoNFT is
         );
     }
 
-    // function gc(uint256 tokenId, uint256[] calldata durationIds) public {
-    //     DoNftInfo storage info = doNftMapping[tokenId];
-    //     uint256 durationId;
-    //     Duration storage duration;
-    //     for (uint256 index = 0; index < durationIds.length; index++) {
-    //         durationId = durationIds[index];
-    //         if (contains(tokenId, durationId)) {
-    //             duration = durationMapping[durationId];
-    //             if (duration.end <= block.timestamp) {
-    //                 _burnDuration(tokenId, durationId);
-    //             }
-    //         }
-    //     }
-
-    //     if (info.durationList.length() == 0) {
-    //         require(!isVNft(tokenId), 'can not burn vNFT');
-
-    //         _burn(tokenId);
-    //     }
-    // }
-
-    // function getFingerprint(uint256 tokenId)
-    //     public
-    //     view
-    //     returns (bytes32 print)
-    // {
-    //     (
-    //         uint256 oid,
-    //         uint256[] memory durationIds,
-    //         uint64[] memory starts,
-    //         uint64[] memory ends,
-    //         uint64 nonce
-    //     ) = getDoNftInfo(tokenId);
-    //     print = keccak256(
-    //         abi.encodePacked(oid, durationIds, starts, ends, nonce)
-    //     );
-    // }
-
     function isVNft(uint256 tokenId) public view override returns (bool) {
         if (tokenId == 0) return false;
 
@@ -439,27 +405,6 @@ abstract contract BaseDoNFT is
         return received;
     }
 
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId
-    ) internal virtual override {
-        super._beforeTokenTransfer(from, to, tokenId);
-        doNftMapping[tokenId].nonce++;
-    }
-
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        virtual
-        override
-        returns (bool)
-    {
-        return
-            interfaceId == type(IBaseDoNFT).interfaceId ||
-            super.supportsInterface(interfaceId);
-    }
-
     function exists(uint256 tokenId)
         public
         view
@@ -481,30 +426,14 @@ abstract contract BaseDoNFT is
         return super._isApprovedOrOwner(spender, tokenId);
     }
 
-    function setMarket(address _market) public onlyOwner {
+    function setMarket(address _market) internal onlyOwner {
         uint256 id;
         assembly {
             id := chainid()
         }
-        require(id == 4 || id == 97, 'only for rinkeby or bsct');
+        require(id == 5 || id == 97, 'only for goerli or bsct');
         market = _market;
     }
-
-    // function multicall(bytes[] calldata data)
-    //     external
-    //     returns (bytes[] memory results)
-    // {
-    //     results = new bytes[](data.length);
-    //     for (uint256 i = 0; i < data.length; i++) {
-    //         (bool success, bytes memory result) = address(this).delegatecall(
-    //             data[i]
-    //         );
-    //         if (success) {
-    //             results[i] = result;
-    //         }
-    //     }
-    //     return results;
-    // }
 
     function getUser(uint256 originalNftId)
         public
@@ -515,4 +444,5 @@ abstract contract BaseDoNFT is
     {
         return IERC4907(oNftAddress).userOf(originalNftId);
     }
+    
 }

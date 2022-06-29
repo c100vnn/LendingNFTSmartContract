@@ -36,7 +36,7 @@ contract doNft is WrapDoNFT, IComplexDoNFT {
         nonReentrant
         returns (uint256 tid)
     {
-        require(oid2vid[oid] == 0, 'already warped');
+        require(oid2vid[oid] == 0, 'already wraped');
         address lastOwner;
 
         if (
@@ -108,33 +108,6 @@ contract doNft is WrapDoNFT, IComplexDoNFT {
         returns (address)
     {
         return IERC4907(oNftAddress).userOf(originalNftId);
-    }
-
-    function couldRedeem(uint256 tokenId, uint256[] calldata durationIds)
-        public
-        view
-        virtual
-        override(WrapDoNFT)
-        returns (bool)
-    {
-        require(isVNft(tokenId), 'not vNFT');
-        DoNftInfo storage info = doNftMapping[tokenId];
-        Duration storage duration = durationMapping[durationIds[0]];
-        if (duration.start > block.timestamp) {
-            return false;
-        }
-        uint64 lastEndTime = duration.end;
-        for (uint256 index = 1; index < durationIds.length; index++) {
-            require(
-                info.durationList.contains(durationIds[index]),
-                string(abi.encodePacked('not contails', durationIds[index]))
-            );
-            duration = durationMapping[durationIds[index]];
-            if (lastEndTime + 1 == duration.start) {
-                lastEndTime = duration.end;
-            }
-        }
-        return lastEndTime == type(uint64).max;
     }
 
     function redeem(uint256 tokenId, uint256[] calldata durationIds)

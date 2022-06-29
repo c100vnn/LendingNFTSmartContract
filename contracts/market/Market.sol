@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
-import "./IMarket.sol";
-import "../OwnableContract.sol";
-import "../IComplexDoNFT.sol";
-import "../ERC4907/wrap/IWrapNFT.sol";
+import '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
+import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
+import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
+import '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
+import './IMarket.sol';
+import '../OwnableContract.sol';
+import '../IComplexDoNFT.sol';
+import '../ERC4907/wrap/IWrapNFT.sol';
 
 contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
     uint64 private constant E5 = 1e5;
@@ -38,12 +38,16 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
             spender == _owner ||
                 ERC721(nftAddress).getApproved(nftId) == spender ||
                 ERC721(nftAddress).isApprovedForAll(_owner, spender),
-            "only approved or owner"
+            'only approved or owner'
         );
     }
 
+    function _whenNotPaused() private view {
+        require(!isPausing, 'is pausing');
+    }
+
     modifier whenNotPaused() {
-        require(!isPausing, "is pausing");
+        _whenNotPaused();
         _;
     }
 
@@ -87,7 +91,7 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
         } else {
             onlyApprovedOrOwner(msg.sender, oNftAddress, oNftId);
         }
-        require(maxDuration > 0, "invalid maxDuration");
+        require(maxDuration > 0, 'invalid maxDuration');
         nftId = IComplexDoNFT(doNftAddress).mintVNft(oNftId);
     }
 
@@ -128,21 +132,19 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
         address renter
     ) internal {
         onlyApprovedOrOwner(msg.sender, nftAddress, nftId);
-        require(maxDuration > 0, "invalid maxDuration");
+        require(maxDuration > 0, 'invalid maxDuration');
         require(
             minDuration <= IComplexDoNFT(nftAddress).getMaxDuration(),
-            "Error:minDuration > max"
+            'Error:minDuration > max'
         );
         require(
             IERC165(nftAddress).supportsInterface(
                 type(IComplexDoNFT).interfaceId
             ),
-            "not doNFT"
+            'not doNFT'
         );
-        (, uint64 dStart, uint64 dEnd) = IComplexDoNFT(nftAddress).getDurationByIndex(
-            nftId,
-            0
-        );
+        (, uint64 dStart, uint64 dEnd) = IComplexDoNFT(nftAddress)
+            .getDurationByIndex(nftId, 0);
         if (maxDuration + dStart > dEnd) {
             maxDuration = dEnd - dStart;
         }
@@ -176,7 +178,8 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
     }
 
     function cancelLendOrder(address nftAddress, uint256 nftId)
-        public override
+        public
+        override
         whenNotPaused
     {
         onlyApprovedOrOwner(msg.sender, nftAddress, nftId);
@@ -186,16 +189,18 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
     }
 
     function getLendOrder(address nftAddress, uint256 nftId)
-        public override
+        public
         view
+        override
         returns (Lending memory)
     {
         return lendingMap[nftAddress][nftId];
     }
 
     function getPaymentNormal(address nftAddress, uint256 nftId)
-        external override
+        external
         view
+        override
         returns (PaymentNormal memory)
     {
         return paymentNormalMap[nftAddress][nftId];
@@ -207,19 +212,29 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
         uint256 durationId,
         uint64 duration,
         address user
-    ) public override payable virtual whenNotPaused nonReentrant returns (uint256 tid) {
-        require(isLendOrderValid(nftAddress, nftId), "invalid order");
+    )
+        public
+        payable
+        virtual
+        override
+        whenNotPaused
+        nonReentrant
+        returns (uint256 tid)
+    {
+        require(isLendOrderValid(nftAddress, nftId), 'invalid order');
         Lending storage lending = lendingMap[nftAddress][nftId];
         if (duration > lending.maxDuration) {
             duration = lending.maxDuration;
         }
-        (uint64 dStart, uint64 dEnd) = IComplexDoNFT(nftAddress).getDuration(durationId);
+        (uint64 dStart, uint64 dEnd) = IComplexDoNFT(nftAddress).getDuration(
+            durationId
+        );
         if (duration > dEnd - dStart) {
             duration = dEnd - dStart;
         }
         uint64 startTime = uint64(block.timestamp);
         if (!(duration == dEnd - dStart || duration == lending.maxDuration)) {
-            require(duration >= lending.minDuration, "duration < minDuration");
+            require(duration >= lending.minDuration, 'duration < minDuration');
         }
         uint64 endTime = uint64(block.timestamp + duration - 1);
         distributePayment(nftAddress, nftId, duration);
@@ -265,7 +280,7 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
         balanceOfFee[pNormal.token] += curFee;
 
         if (pNormal.token == address(0)) {
-            require(msg.value >= totalPrice, "payment is not enough");
+            require(msg.value >= totalPrice, 'payment is not enough');
             payable(ERC721(nftAddress).ownerOf(nftId)).transfer(leftTotalPrice);
             if (msg.value > totalPrice) {
                 payable(msg.sender).transfer(msg.value - totalPrice);
@@ -285,7 +300,7 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
             );
             require(
                 balance_before + totalPrice == balance_after,
-                "not support burn ERC20"
+                'not support burn ERC20'
             );
             SafeERC20.safeTransfer(
                 IERC20(pNormal.token),
@@ -296,27 +311,29 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
     }
 
     function setFee(uint256 fee_) public override onlyAdmin {
-        require(fee_ <= 1e4, "invalid fee");
+        require(fee_ <= 1e4, 'invalid fee');
         fee = fee_;
     }
 
-    function getFee() public override view returns (uint256) {
+    function getFee() public view override returns (uint256) {
         return fee;
     }
 
     function setMarketBeneficiary(address payable beneficiary_)
-        public override
+        public
+        override
         onlyOwner
     {
         beneficiary = beneficiary_;
     }
 
     function claimFee(address[] calldata paymentTokens)
-        public override
+        public
+        override
         whenNotPaused
         nonReentrant
     {
-        require(msg.sender == beneficiary, "not beneficiary");
+        require(msg.sender == beneficiary, 'not beneficiary');
         for (uint256 index = 0; index < paymentTokens.length; index++) {
             uint256 balance = balanceOfFee[paymentTokens[index]];
             if (balance > 0) {
@@ -335,8 +352,9 @@ contract Market is OwnableContract, ReentrancyGuardUpgradeable, IMarket {
     }
 
     function isLendOrderValid(address nftAddress, uint256 nftId)
-        public override
+        public
         view
+        override
         returns (bool)
     {
         Lending storage lending = lendingMap[nftAddress][nftId];

@@ -15,18 +15,30 @@ contract OwnableContract {
         admin = _admin;
     }
 
+    function _onlyOwner() private view {
+        require(msg.sender == owner, 'onlyOwner');
+    }
+
     modifier onlyOwner() {
-        require(msg.sender == owner, "onlyOwner");
+        _onlyOwner();
         _;
+    }
+
+    function _onlyPendingOwner() private view {
+        require(msg.sender == pendingOwner, 'onlyPendingOwner');
     }
 
     modifier onlyPendingOwner() {
-        require(msg.sender == pendingOwner, "onlyPendingOwner");
+        _onlyPendingOwner();
         _;
     }
 
+    function _onlyAdmin() private view {
+        require(msg.sender == admin || msg.sender == owner, 'onlyAdmin');
+    }
+
     modifier onlyAdmin() {
-        require(msg.sender == admin || msg.sender == owner, "onlyAdmin");
+        _onlyAdmin();
         _;
     }
 
